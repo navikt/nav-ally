@@ -437,27 +437,13 @@ Validator.prototype.printReportToConsole = function(
     'DETAILED_REPORT'
   )
 ) {
-  let numViolationFailes = 0;
-  let numIncompleteFailes = 0;
-
   this.results.forEach(function(page) {
     log('\n\n');
     log('Page: ' + (page.desc || page.link));
-
     if (
       page.result.violations.length > 0 ||
       page.result.incomplete.length > 0
     ) {
-      const violationsFailes = this.__countViolationOccurrences(
-        page.result.violations
-      );
-      const incompleteFailes = this.__countViolationOccurrences(
-        page.result.incomplete
-      );
-
-      numViolationFailes += violationsFailes;
-      numIncompleteFailes += incompleteFailes;
-
       log('\n');
       log('Report: ');
       Report.printReport(page.result, page.desc, detailedReport);
@@ -734,7 +720,7 @@ Validator.prototype.__typeAndPress = function(
   key
 ) {
   const self = this;
-  return type(browser, cssTypeInto, textToType)
+  return this.__type(browser, cssTypeInto, textToType)
     .then(function() {
       return this.__keyboard(browser, key, [], cssTypeInto);
     })
@@ -826,10 +812,11 @@ Validator.prototype.__keyboard = function(
   keyCombo = [],
   elementCss = 'body'
 ) {
+  const self = this;
   return browser
     .findElement(By.css(elementCss))
     .then(function(element) {
-      const keyTypeId = __keytype(keyType, keyCombo);
+      const keyTypeId = self.__keytype(keyType, keyCombo);
       return element.sendKeys(keyTypeId);
     })
     .catch(function(err) {
@@ -846,7 +833,7 @@ Validator.prototype.__keyboard = function(
 Validator.prototype.__keytype = function(key, keyCombo) {
   // key combination with stateful and stateless keys
   if (key.toLowerCase() === 'combo' && keyCombo && keyCombo.length > 0)
-    return __keyCombo(keyCombo);
+    return this.__keyCombo(keyCombo);
   // stateless keys
   else if (key.toLowerCase() === 'tab') return SeleniumWebDriver.Key.TAB;
   else if (key.toLowerCase() === 'enter') return SeleniumWebDriver.Key.ENTER;

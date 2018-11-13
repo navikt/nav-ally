@@ -5,6 +5,7 @@ var path = require('path');
 var fs = require('fs');
 var exists = fs.existsSync || path.existsSync;
 let Validator = require('../src/main/runners/mocha/MochaRunner');
+const cwd = process.cwd();
 
 program._name = 'nav-ally';
 

@@ -1,6 +1,7 @@
 const assert = require('assert');
 const Validator = require('../../validator');
 const fileInput = require('../../inputs/InputLoader');
+const {describe, it} = require('mocha');
 
 /**
  * Configuration from environment variables or defaults.
@@ -24,17 +25,24 @@ describe(NAME, function() {
     validator
       .run()
       .then(function(results) {
-
         // dynamically create tests for each page
         results.forEach(page => {
           describe(page.desc || page.link, function() {
             it('should have no accessibility violations', function(partDone) {
-              assert.strictEqual(validator.getViolationsOnPage(page), 0, "Accessibility violations found.");
+              assert.strictEqual(
+                validator.getViolationsOnPage(page),
+                0,
+                'Accessibility violations found.'
+              );
               partDone();
             });
             if (assertWarnings) {
               it('should have no accessibility warnings', function(partDone) {
-                assert.strictEqual(validator.getWarningsOnPage(page), 0, "Accessibility warnings found.");
+                assert.strictEqual(
+                  validator.getWarningsOnPage(page),
+                  0,
+                  'Accessibility warnings found.'
+                );
                 partDone();
               });
             }
@@ -42,8 +50,17 @@ describe(NAME, function() {
         });
 
         // mark the test suite as success or fail
-        assert.strictEqual(validator.getValidationErrors(), 0, "Test suite contains accessibility violations.");
-        if (assertWarnings) assert.strictEqual(validator.getWarnings(), 0, "Test suite contains accessibility warnings.");
+        assert.strictEqual(
+          validator.getValidationErrors(),
+          0,
+          'Test suite contains accessibility violations.'
+        );
+        if (assertWarnings)
+          assert.strictEqual(
+            validator.getWarnings(),
+            0,
+            'Test suite contains accessibility warnings.'
+          );
       })
       .then(done, done);
   });
