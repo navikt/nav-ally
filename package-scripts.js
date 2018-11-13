@@ -4,7 +4,7 @@ module.exports = {
   scripts: {
     lint: {
       default: {
-        script: 'nps lint.code lint.markdown',
+        script: 'nps lint.code',
         description: 'Lint code and Markdown documentation'
       },
       code: {
