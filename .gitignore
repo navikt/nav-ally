@@ -25,7 +25,6 @@ npm-debug.log
 .settings
 .DS_Store
 
-package-lock.json
 .sass-cache/
 docs/_site
 docs/api
