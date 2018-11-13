@@ -6,7 +6,7 @@ const {log, error, trace} = require('../log/log');
 /**
  * @class InputLoader
  */
-function InputLoader() {}
+function InputLoader() {} /* eslint-disable-line no-unused-vars */
 
 /**
  * Loads files from one of two possible environment variables.
@@ -65,7 +65,6 @@ function handleInputFromDefinitionFile(definitionFile) {
 }
 
 function loadDefinitionFile(name, file) {
-  let definitionFile = {};
   if (file.endsWith('.js')) {
     console.log('Loading Javascript definition file: ' + name);
     let jsObj = require(file);

@@ -2,12 +2,12 @@ function printNodes(nodeCount, nodes) {
   for (let j = 0; j < nodeCount; j += 1) {
     let node = nodes[j];
 
-    if (typeof node !== UNDEFINED) {
+    if (typeof node !== 'undefined') {
       console.log('\tHTML Element: ' + node.html);
       let anys = node.any;
       let targets = node.target;
 
-      if (typeof anys !== UNDEFINED) {
+      if (typeof anys !== 'undefined') {
         for (let k = 0; k < anys.length; k += 1) {
           let displayNumber = k + 1;
           let any = anys[k];
@@ -15,7 +15,7 @@ function printNodes(nodeCount, nodes) {
         }
       }
 
-      if (typeof targets !== UNDEFINED) {
+      if (typeof targets !== 'undefined') {
         let targetCount = targets.length;
 
         for (let k = 0; k < targetCount; k += 1) {
@@ -50,7 +50,7 @@ function print(violations, url, type, detailedReport) {
       let violation = violations[i];
       let nodes = violation.nodes;
 
-      if (typeof nodes !== UNDEFINED) {
+      if (typeof nodes !== 'undefined') {
         let nodeCount = nodes.length;
 
         nodeCount > 1
@@ -99,16 +99,14 @@ exports.printReport = function(results, desc, detailedReport) {
   let url = desc || results.url;
 
   let violations = results.violations;
-  if (typeof violations !== UNDEFINED) {
+  if (typeof violations !== 'undefined') {
     print(violations, url, true, detailedReport);
   }
 
   console.log();
 
   let incomplete = results.incomplete;
-  if (typeof incomplete !== UNDEFINED) {
+  if (typeof incomplete !== 'undefined') {
     print(incomplete, url, false, detailedReport);
   }
 };
-
-const UNDEFINED = 'undefined';

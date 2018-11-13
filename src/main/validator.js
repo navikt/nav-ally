@@ -9,7 +9,6 @@ const AxeBuilder = require('axe-webdriverjs');
 const Until = SeleniumWebDriver.until;
 
 const By = SeleniumWebDriver.By;
-const Cache = require('./cache/cache');
 const {log, error} = require('./log/log');
 const Report = require('./reports/report');
 const path = require('path');
@@ -91,13 +90,16 @@ function Validator(inputFile, userConfig) {
  * Run validation on a given set of pages in a synchronized
  * manner, then return the results.
  */
-Validator.prototype.run = function() {
+Validator.prototype.run = function(printToConsole = true) {
   const self = this;
   return new Promise(function(resolve) {
     self.__validate(self.inputFile.links, () => resolve());
   })
     .then(() => {
       return this.closeAllBrowsers();
+    })
+    .then(() => {
+      if (printToConsole) self.printReportToConsole();
     })
     .then(function() {
       return self.results;

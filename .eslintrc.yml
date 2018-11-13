@@ -8,12 +8,10 @@ env:
   node: yes
 
 parserOptions:
-  ecmaVersion: 5
+  ecmaVersion: 2018
   ecmaFeatures:
     globalReturn: no
-    experimentalObjectRestSpread: no
     jsx: no
-  sourceType: script
 
 rules:
   strict:
@@ -25,7 +23,7 @@ overrides:
     - src/**/*.js
     - bin/*
     parserOptions:
-      ecmaVersion: 6
+      ecmaVersion: 2018
     env:
       browser: no
 

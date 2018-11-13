@@ -13,29 +13,28 @@ const {NAME, TIMEOUT, ASSERT_WARNINGS} = require('../../globals');
 describe(NAME, function() {
   this.timeout(TIMEOUT);
 
+  const validator = new Validator();
+
   it('Test Suite', function(done) {
     const assertWarnings = fileInput.getBooleanValue(
       ASSERT_WARNINGS,
       'ASSERT_WARNINGS'
     );
 
-    let validator = new Validator();
-
     validator
       .run()
-      .then(function() {
-        validator.printReportToConsole();
+      .then(function(results) {
 
         // dynamically create tests for each page
-        validator.results.forEach(page => {
+        results.forEach(page => {
           describe(page.desc || page.link, function() {
             it('should have no accessibility violations', function(partDone) {
-              assert.equal(validator.getViolationsOnPage(page), 0);
+              assert.strictEqual(validator.getViolationsOnPage(page), 0, "Accessibility violations found.");
               partDone();
             });
             if (assertWarnings) {
               it('should have no accessibility warnings', function(partDone) {
-                assert.equal(validator.getWarningsOnPage(page), 0);
+                assert.strictEqual(validator.getWarningsOnPage(page), 0, "Accessibility warnings found.");
                 partDone();
               });
             }
@@ -43,8 +42,8 @@ describe(NAME, function() {
         });
 
         // mark the test suite as success or fail
-        assert.equal(validator.getValidationErrors(), 0);
-        if (assertWarnings) assert.equal(validator.getWarnings(), 0);
+        assert.strictEqual(validator.getValidationErrors(), 0, "Test suite contains accessibility violations.");
+        if (assertWarnings) assert.strictEqual(validator.getWarnings(), 0, "Test suite contains accessibility warnings.");
       })
       .then(done, done);
   });
