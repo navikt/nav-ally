@@ -88,18 +88,18 @@ Validator.runValidator();
 
 function yesOrNo(flag, msg, altMsg, errorMsg, envParam) {
   if (!flag) {
+    console.log(altMsg);
+    process.env[envParam] = false;
+  } else {
+    if (flag === 'yes' || flag === 'true' || flag === true) {
+      console.log(msg);
+      process.env[envParam] = true;
+    } else if (flag === 'no' || flag === 'false' || flag === false) {
       console.log(altMsg);
       process.env[envParam] = false;
-  } else {
-      if (flag === 'yes' || flag === 'true' || flag === true) {
-          console.log(msg);
-          process.env[envParam] = true;
-      } else if (flag === 'no' || flag === 'false' || flag === false) {
-          console.log(altMsg);
-          process.env[envParam] = false;
-      } else {
-          console.error(errorMsg + ' - Must be one of yes/no/true/false');
-          process.exit(1);
-      }
+    } else {
+      console.error(errorMsg + ' - Must be one of yes/no/true/false');
+      process.exit(1);
+    }
   }
 }

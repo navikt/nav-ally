@@ -1,6 +1,6 @@
 const assert = require('assert');
 const Validator = require('../../validator');
-const fileInput = require("../../inputs/InputLoader");
+const fileInput = require('../../inputs/InputLoader');
 
 /**
  * Configuration from environment variables or defaults.
@@ -14,8 +14,10 @@ describe(NAME, function() {
   this.timeout(TIMEOUT);
 
   it('Test Suite', function(done) {
-
-    const assertWarnings = fileInput.getBooleanValue(ASSERT_WARNINGS, "ASSERT_WARNINGS");
+    const assertWarnings = fileInput.getBooleanValue(
+      ASSERT_WARNINGS,
+      'ASSERT_WARNINGS'
+    );
 
     let validator = new Validator();
 
@@ -47,5 +49,3 @@ describe(NAME, function() {
       .then(done, done);
   });
 });
-
-

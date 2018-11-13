@@ -10,6 +10,7 @@
     "serve-doc": "bundle exec jekyll serve --source ./docs --destination ./docs/_site --config ./docs/_config.yml",
     "start-test": "node src/test/validator-test.js",
     "lint": "nps lint",
+    "lintfix": "nps lint.codefix",
     "reformat": "nps reformat",
     "docs": "nps docs"
   },

@@ -8,8 +8,12 @@ module.exports = {
         description: 'Lint code and Markdown documentation'
       },
       code: {
-        script: 'eslint . "bin/*"',
+        script: 'eslint "./src/**/*" "bin/*"',
         description: 'Run ESLint linter'
+      },
+      codefix: {
+          script: 'eslint "./src/**/*" "bin/*" --fix',
+          description: 'Run ESLint linter with fix'
       },
       markdown: {
         script: 'markdownlint "*.md" "docs/**/*.md" ".github/*.md"',

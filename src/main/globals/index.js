@@ -68,8 +68,8 @@ const ASSERT_WARNINGS = process.env.ASSERT_WARNINGS || false;
  * @constant
  */
 const TAGS =
-    process.env.TAGS ||
-    'wcag2a,wcag2aa,wcag2aaa,section508,best-practice,experimental,' +
+  process.env.TAGS ||
+  'wcag2a,wcag2aa,wcag2aaa,section508,best-practice,experimental,' +
     'cat.aria,cat.color,cat.text-alternatives,cat.time-and-media,cat.tables,cat.semantics,' +
     'cat.sensory-and-visual-cues,cat.parsing,cat.structure,cat.name-role-value,cat.keyboard,cat.forms,cat.language';
 
@@ -105,20 +105,19 @@ const FIREFOX_BINARY = process.env.FIREFOX_BINARY;
  */
 const REUSE_BROWSERS = process.env.REUSE_BROWSERS || false;
 
-
 module.exports = {
-    DEBUG,
-    NAME,
-    BROWSER,
-    HEADLESS,
-    TIMEOUT,
-    WAIT_TIMEOUT,
-    DEFINITION_FILE,
-    DETAILED_REPORT,
-    ASSERT_WARNINGS,
-    TAGS,
-    YAML_DEFINITION,
-    CHROME_BINARY,
-    FIREFOX_BINARY,
-    REUSE_BROWSERS
+  DEBUG,
+  NAME,
+  BROWSER,
+  HEADLESS,
+  TIMEOUT,
+  WAIT_TIMEOUT,
+  DEFINITION_FILE,
+  DETAILED_REPORT,
+  ASSERT_WARNINGS,
+  TAGS,
+  YAML_DEFINITION,
+  CHROME_BINARY,
+  FIREFOX_BINARY,
+  REUSE_BROWSERS
 };

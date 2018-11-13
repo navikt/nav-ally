@@ -1,29 +1,47 @@
-const SeleniumWebDriver = require('selenium-webdriver'),
-  Chrome = require('selenium-webdriver/chrome'),
-  Firefox = require('selenium-webdriver/firefox'),
-  AxeBuilder = require('axe-webdriverjs'),
-  Until = SeleniumWebDriver.until,
-  By = SeleniumWebDriver.By;
+const SeleniumWebDriver = require('selenium-webdriver');
+
+const Chrome = require('selenium-webdriver/chrome');
+
+const Firefox = require('selenium-webdriver/firefox');
+
+const AxeBuilder = require('axe-webdriverjs');
+
+const Until = SeleniumWebDriver.until;
+
+const By = SeleniumWebDriver.By;
 const Cache = require('./cache/cache');
-const { log, error } = require('./log/log');
+const {log, error} = require('./log/log');
 const Report = require('./reports/report');
 const path = require('path');
-const inputLoader = require("./inputs/InputLoader");
+const inputLoader = require('./inputs/InputLoader');
 
-const { DEBUG, CHROME_BINARY, FIREFOX_BINARY, REUSE_BROWSERS, TAGS, TIMEOUT, ASSERT_WARNINGS,
-    WAIT_TIMEOUT, HEADLESS, BROWSER, DETAILED_REPORT, DEFINITION_FILE, YAML_DEFINITION } = require('./globals/index');
+const {
+  DEBUG,
+  CHROME_BINARY,
+  FIREFOX_BINARY,
+  REUSE_BROWSERS,
+  TAGS,
+  TIMEOUT,
+  ASSERT_WARNINGS,
+  WAIT_TIMEOUT,
+  HEADLESS,
+  BROWSER,
+  DETAILED_REPORT,
+  DEFINITION_FILE,
+  YAML_DEFINITION
+} = require('./globals/index');
 
 const defaultConfig = {
-    defaultBrowser: BROWSER,
-    headless: inputLoader.getBooleanValue(HEADLESS, "HEADLESS"),
-    timeout: TIMEOUT,
-    waitTimeout: WAIT_TIMEOUT,
-    tags: TAGS.split(',')};
+  defaultBrowser: BROWSER,
+  headless: inputLoader.getBooleanValue(HEADLESS, 'HEADLESS'),
+  timeout: TIMEOUT,
+  waitTimeout: WAIT_TIMEOUT,
+  tags: TAGS.split(',')
+};
 
 // selenium 3.6 promise manager is deprecated,
 // disabling means we'll use native promises.
 SeleniumWebDriver.promise.USE_PROMISE_MANAGER = false;
-
 
 /**
  * @public
@@ -42,30 +60,31 @@ SeleniumWebDriver.promise.USE_PROMISE_MANAGER = false;
  * @constructor
  */
 function Validator(inputFile, userConfig) {
+  this.inputFile =
+    inputFile ||
+    inputLoader.loadInputFromEnvironment(DEFINITION_FILE, YAML_DEFINITION);
 
-    this.inputFile = inputFile ? inputFile : inputLoader.loadInputFromEnvironment(DEFINITION_FILE, YAML_DEFINITION);
+  const config = userConfig ? {...defaultConfig, ...userConfig} : defaultConfig;
 
-    const config = userConfig ? {...defaultConfig, ...userConfig} : defaultConfig;
+  this.defaultBrowserName = config.defaultBrowser.toLowerCase();
+  this.headlessBrowser = config.headless;
 
-    this.defaultBrowserName = config.defaultBrowser.toLowerCase();
-    this.headlessBrowser = config.headless;
+  // internal reference to browser, lazy loaded when needed
+  this.browser = undefined;
 
-    // internal reference to browser, lazy loaded when needed
-    this.browser = undefined;
+  // caching browser windows
+  this.browsers = [];
 
-    // caching browser windows
-    this.browsers = [];
+  this.scriptTimeout = config.timeout;
+  this.waitTimeout = config.waitTimeout;
 
-    this.scriptTimeout = config.timeout;
-    this.waitTimeout = config.waitTimeout;
+  // will be populated with validation results
+  this.results = [];
 
-    // will be populated with validation results
-    this.results = [];
+  // uses the default set of tags (the recommended way) to run aXe
+  this.tags = config.tags;
 
-    // uses the default set of tags (the recommended way) to run aXe
-    this.tags = config.tags;
-
-    if (DEBUG) printDebugInfo();
+  if (DEBUG) printDebugInfo();
 }
 
 /**
@@ -77,12 +96,12 @@ Validator.prototype.run = function() {
   return new Promise(function(resolve) {
     self.__validate(self.inputFile.links, () => resolve());
   })
-  .then(() => {
-    return this.closeAllBrowsers();
-  })
-  .then(function() {
-    return self.results;
-  });
+    .then(() => {
+      return this.closeAllBrowsers();
+    })
+    .then(function() {
+      return self.results;
+    });
 };
 
 /**
@@ -163,7 +182,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
 
   const disabledRules =
     options && options.ignoreRules ? options.ignoreRules.split(',') : [];
-  //disabledRules.push("css-orientation-is-not-locked"); // consider disabling this rule
+  // disabledRules.push("css-orientation-is-not-locked"); // consider disabling this rule
 
   const vtags = options && options.tags ? options.tags.split(',') : tags;
   log('Running UU validation with tags: ' + vtags); // + ", without rules: " + disabledRules);
@@ -191,28 +210,28 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
  * @returns {SeleniumWebDriver} An existing browser from the cache, or new browser if none exists.
  */
 Validator.prototype.reuseBrowser = function(options) {
-    if (options && options.browser) {
-        const overriddenBrowser = options.browser.toLowerCase();
-        let cachedBrowser = this.__getBrowser(overriddenBrowser);
-        if (cachedBrowser) return cachedBrowser;
-        else {
-          let newCachedBrowser = {};
-            if (overriddenBrowser === 'chrome')
-                newCachedBrowser = this.createChrome(this.headlessBrowser);
-            if (overriddenBrowser === 'firefox')
-                newCachedBrowser = this.createFirefox(this.headlessBrowser);
-            this.__addBrowser(newCachedBrowser, overriddenBrowser);
-            return newCachedBrowser;
-        }
-    } else {
-        const cachedBrowser = this.__getBrowser(this.defaultBrowserName);
-        if (cachedBrowser) return cachedBrowser;
-        else {
-            let newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
-            this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
-            return newCachedBrowser;
-        }
+  if (options && options.browser) {
+    const overriddenBrowser = options.browser.toLowerCase();
+    let cachedBrowser = this.__getBrowser(overriddenBrowser);
+    if (cachedBrowser) return cachedBrowser;
+    else {
+      let newCachedBrowser = {};
+      if (overriddenBrowser === 'chrome')
+        newCachedBrowser = this.createChrome(this.headlessBrowser);
+      if (overriddenBrowser === 'firefox')
+        newCachedBrowser = this.createFirefox(this.headlessBrowser);
+      this.__addBrowser(newCachedBrowser, overriddenBrowser);
+      return newCachedBrowser;
     }
+  } else {
+    const cachedBrowser = this.__getBrowser(this.defaultBrowserName);
+    if (cachedBrowser) return cachedBrowser;
+    else {
+      let newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
+      this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
+      return newCachedBrowser;
+    }
+  }
 };
 
 /**
@@ -222,20 +241,20 @@ Validator.prototype.reuseBrowser = function(options) {
  * @returns {SeleniumWebDriver} A new WebDriver-browser.
  */
 Validator.prototype.startNewBrowser = function(options) {
-    if (options && options.browser) {
-        const overriddenBrowser = options.browser.toLowerCase();
-        let newBrowser = {};
-        if (overriddenBrowser === 'chrome')
-            newBrowser = this.createChrome(this.headlessBrowser);
-        if (overriddenBrowser === 'firefox')
-            newBrowser = this.createFirefox(this.headlessBrowser);
-        this.__addBrowser(newBrowser, overriddenBrowser);
-        return newBrowser;
-    } else {
-        let newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
-        this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
-        return newCachedBrowser;
-    }
+  if (options && options.browser) {
+    const overriddenBrowser = options.browser.toLowerCase();
+    let newBrowser = {};
+    if (overriddenBrowser === 'chrome')
+      newBrowser = this.createChrome(this.headlessBrowser);
+    if (overriddenBrowser === 'firefox')
+      newBrowser = this.createFirefox(this.headlessBrowser);
+    this.__addBrowser(newBrowser, overriddenBrowser);
+    return newBrowser;
+  } else {
+    let newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
+    this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
+    return newCachedBrowser;
+  }
 };
 
 /**
@@ -246,12 +265,12 @@ Validator.prototype.startNewBrowser = function(options) {
  * @returns {SeleniumWebDriver | undefined} A WebDriver-browser, or undefined if no browser was found.
  */
 Validator.prototype.__getBrowser = function(browserName) {
-    // return an existing browser window
-    const cachedBrowser = this.browsers.find(
-        cached => cached.name === browserName
-    );
-    if (cachedBrowser) return cachedBrowser.binary;
-    return undefined;
+  // return an existing browser window
+  const cachedBrowser = this.browsers.find(
+    cached => cached.name === browserName
+  );
+  if (cachedBrowser) return cachedBrowser.binary;
+  return undefined;
 };
 
 /**
@@ -261,10 +280,10 @@ Validator.prototype.__getBrowser = function(browserName) {
  * @param browserName Name of the browser used as key.
  */
 Validator.prototype.__addBrowser = function(browser, browserName) {
-    this.browsers.push({
-        name: browserName,
-        binary: browser
-    });
+  this.browsers.push({
+    name: browserName,
+    binary: browser
+  });
 };
 
 /**
@@ -274,19 +293,19 @@ Validator.prototype.__addBrowser = function(browser, browserName) {
  * @returns {!ThenableWebDriver}
  */
 Validator.prototype.createChrome = function(headless) {
-    let builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
-    const options = new Chrome.Options();
-    if (headless) {
-        if (CHROME_BINARY && CHROME_BINARY !== undefined) {
-            options.setChromeBinaryPath(CHROME_BINARY);
-            log('Chrome running with binary: ' + CHROME_BINARY);
-        }
-        options.headless();
+  let builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
+  const options = new Chrome.Options();
+  if (headless) {
+    if (CHROME_BINARY && CHROME_BINARY !== undefined) {
+      options.setChromeBinaryPath(CHROME_BINARY);
+      log('Chrome running with binary: ' + CHROME_BINARY);
     }
-    options.addArguments(['no-sandbox', 'allow-running-insecure-content']);
-    options.setAcceptInsecureCerts(true);
-    builder.withCapabilities(options);
-    return builder.build();
+    options.headless();
+  }
+  options.addArguments(['no-sandbox', 'allow-running-insecure-content']);
+  options.setAcceptInsecureCerts(true);
+  builder.withCapabilities(options);
+  return builder.build();
 };
 
 /**
@@ -296,18 +315,18 @@ Validator.prototype.createChrome = function(headless) {
  * @returns {!ThenableWebDriver}
  */
 Validator.prototype.createFirefox = function(headless) {
-    let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
-    const options = new Firefox.Options();
-    if (headless) {
-        if (FIREFOX_BINARY && FIREFOX_BINARY !== undefined) {
-            options.setBinary(FIREFOX_BINARY);
-            log('Firefox running with binary: ' + FIREFOX_BINARY);
-        }
-        options.headless();
+  let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
+  const options = new Firefox.Options();
+  if (headless) {
+    if (FIREFOX_BINARY && FIREFOX_BINARY !== undefined) {
+      options.setBinary(FIREFOX_BINARY);
+      log('Firefox running with binary: ' + FIREFOX_BINARY);
     }
-    options.setAcceptInsecureCerts(true);
-    builder.withCapabilities(options);
-    return builder.build();
+    options.headless();
+  }
+  options.setAcceptInsecureCerts(true);
+  builder.withCapabilities(options);
+  return builder.build();
 };
 
 /**
@@ -317,15 +336,15 @@ Validator.prototype.createFirefox = function(headless) {
  * @returns {SeleniumWebDriver} A default WebDriver-browser configured.
  */
 Validator.prototype.createDefaultBrowser = function(headless) {
-    if (this.defaultBrowserName === 'chrome')
-        this.browser = this.createChrome(!!headless);
-    if (this.defaultBrowserName === 'firefox')
-        this.browser = this.createFirefox(!!headless);
-    return this.browser;
+  if (this.defaultBrowserName === 'chrome')
+    this.browser = this.createChrome(!!headless);
+  if (this.defaultBrowserName === 'firefox')
+    this.browser = this.createFirefox(!!headless);
+  return this.browser;
 };
 
 Validator.prototype.setTimeout = function(browser, timeout) {
-    return browser.manage().setTimeouts({script: timeout});
+  return browser.manage().setTimeouts({script: timeout});
 };
 
 /**
@@ -334,15 +353,17 @@ Validator.prototype.setTimeout = function(browser, timeout) {
  * @returns {Promise<any[] | void>} A promise that resolves when all open browsers are closed.
  */
 Validator.prototype.closeAllBrowsers = function() {
-    const quits = [];
+  const quits = [];
 
-    log("Closing " + this.browsers.length + " browsers.");
+  log('Closing ' + this.browsers.length + ' browsers.');
 
-    this.browsers.forEach(function(cachedBrowser) {
-        quits.push(cachedBrowser.binary.quit());
-    });
+  this.browsers.forEach(function(cachedBrowser) {
+    quits.push(cachedBrowser.binary.quit());
+  });
 
-    return Promise.all(quits).catch((err) => this.__exit(1, {msg: "Error occurred while trying to close browsers.", err}));
+  return Promise.all(quits).catch(err =>
+    this.__exit(1, {msg: 'Error occurred while trying to close browsers.', err})
+  );
 };
 
 /**
@@ -408,7 +429,12 @@ Validator.prototype.getWarningsOnPage = function(page) {
  *
  * @param detailedReport Set to true to print out a detailed report about the errors.
  */
-Validator.prototype.printReportToConsole = function(detailedReport = inputLoader.getBooleanValue(DETAILED_REPORT, "DETAILED_REPORT")) {
+Validator.prototype.printReportToConsole = function(
+  detailedReport = inputLoader.getBooleanValue(
+    DETAILED_REPORT,
+    'DETAILED_REPORT'
+  )
+) {
   let numViolationFailes = 0;
   let numIncompleteFailes = 0;
 
@@ -548,7 +574,7 @@ Validator.prototype.__commandSelector = function(browser, chainElement) {
       browser,
       chainElement['clickAndWait'].clickOn,
       chainElement['clickAndWait'].waitFor ||
-      chainElement['clickAndWait'].thenWaitFor
+        chainElement['clickAndWait'].thenWaitFor
     );
   }
   if (chainElement.hasOwnProperty('selectOption')) {
@@ -611,44 +637,48 @@ Validator.prototype.__commandSelector = function(browser, chainElement) {
  * @param pageLink The link to the page that should be authenticated.
  * @returns {Promise<*>}
  */
-Validator.prototype.__authenticate = async function(browser, authOptions, pageLink) {
+Validator.prototype.__authenticate = async function(
+  browser,
+  authOptions,
+  pageLink
+) {
+  const authFolder = path.dirname(path.resolve(authOptions.handlerDir));
 
-    const authFolder = path.dirname(path.resolve(authOptions.handlerDir));
+  if (authOptions.handler) {
+    const handlerPath = path.resolve(authFolder, authOptions.handler);
 
-    if (authOptions.handler) {
-        const handlerPath = path.resolve(authFolder, authOptions.handler);
+    log('Definition file directory: ' + this.definitionFileDir);
+    log('Resolved authentication handler path: ' + handlerPath);
 
-        log("Definition file directory: " + this.definitionFileDir);
-        log("Resolved authentication handler path: " + handlerPath);
+    const handler = require(handlerPath);
 
-        const handler = require(handlerPath);
-
-         if (DEBUG) {
-             log("Authentication handler loaded:", handler);
-         }
-
-        if (handler) {
-            this.setAuthenticationHandler(handler.handleAuthentication);
-        } else {
-            this.__exit(1, {msg: "Cannot find authentication handler " + authOptions.handler})
-        }
-    } else {
-        this.__exit(1, {msg: "No authentication handler is set."})
+    if (DEBUG) {
+      log('Authentication handler loaded:', handler);
     }
 
-    await browser.get(pageLink);
+    if (handler) {
+      this.setAuthenticationHandler(handler.handleAuthentication);
+    } else {
+      this.__exit(1, {
+        msg: 'Cannot find authentication handler ' + authOptions.handler
+      });
+    }
+  } else {
+    this.__exit(1, {msg: 'No authentication handler is set.'});
+  }
 
-    return this.authenticationHandler(browser, authOptions);
+  await browser.get(pageLink);
+
+  return this.authenticationHandler(browser, authOptions);
 };
 
 Validator.prototype.setAuthenticationHandler = function(authenticationHandler) {
-    this.authenticationHandler = authenticationHandler;
+  this.authenticationHandler = authenticationHandler;
 };
 
 Validator.prototype.setDirname = function(dir) {
-    this.definitionFileDir = dir;
+  this.definitionFileDir = dir;
 };
-
 
 /**
  * Dropdown-selection (using the option text, not value).
@@ -815,7 +845,6 @@ Validator.prototype.__keytype = function(key, keyCombo) {
   // key combination with stateful and stateless keys
   if (key.toLowerCase() === 'combo' && keyCombo && keyCombo.length > 0)
     return __keyCombo(keyCombo);
-
   // stateless keys
   else if (key.toLowerCase() === 'tab') return SeleniumWebDriver.Key.TAB;
   else if (key.toLowerCase() === 'enter') return SeleniumWebDriver.Key.ENTER;
@@ -823,7 +852,6 @@ Validator.prototype.__keytype = function(key, keyCombo) {
   else if (key.toLowerCase() === 'delete') return SeleniumWebDriver.Key.DELETE;
   else if (key.toLowerCase() === 'backspace')
     return SeleniumWebDriver.Key.BACK_SPACE;
-
   // stateful keys that require Key.NULL at the end
   else if (key.toLowerCase() === 'ctrl') return SeleniumWebDriver.Key.COMMAND;
   else if (key.toLowerCase() === 'alt') return SeleniumWebDriver.Key.ALT;
@@ -831,7 +859,6 @@ Validator.prototype.__keytype = function(key, keyCombo) {
   else if (key.toLowerCase() === 'command')
     return SeleniumWebDriver.Key.COMMAND;
   else if (key.toLowerCase() === 'null') return SeleniumWebDriver.Key.NULL;
-
   // other keys on the keyboard are just returned as is (letters/numbers)
   else return key;
 };
@@ -863,24 +890,24 @@ Validator.prototype.__exit = function(code, {msg, err}) {
   log('Exiting. Closing ' + this.browsers.length + ' browsers');
 
   this.closeAllBrowsers().then(() => {
-      process.exit(1);
+    process.exit(1);
   });
 };
 
 function printDebugInfo() {
-    log('\nValidator configuration set:\n');
-    log('DEFINITION_FILE = ' + DEFINITION_FILE);
-    log('BROWSER = ' + BROWSER);
-    log('HEADLESS = ' + HEADLESS);
-    log('TIMEOUT = ' + TIMEOUT);
-    log('WAIT_TIMEOUT = ' + WAIT_TIMEOUT);
-    log('DETAILED_REPORT = ' + DETAILED_REPORT);
-    log('ASSERT_WARNINGS = ' + ASSERT_WARNINGS);
-    log('TAGS = ' + TAGS);
-    log('\n');
+  log('\nValidator configuration set:\n');
+  log('DEFINITION_FILE = ' + DEFINITION_FILE);
+  log('BROWSER = ' + BROWSER);
+  log('HEADLESS = ' + HEADLESS);
+  log('TIMEOUT = ' + TIMEOUT);
+  log('WAIT_TIMEOUT = ' + WAIT_TIMEOUT);
+  log('DETAILED_REPORT = ' + DETAILED_REPORT);
+  log('ASSERT_WARNINGS = ' + ASSERT_WARNINGS);
+  log('TAGS = ' + TAGS);
+  log('\n');
 }
 
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   error('UnhandledRejection has occurred.');
   error(err);
 });
