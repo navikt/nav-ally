@@ -1,0 +1,35 @@
+root: true
+
+extends:
+- semistandard
+- plugin:prettier/recommended
+
+env:
+  node: yes
+
+parserOptions:
+  ecmaVersion: 5
+  ecmaFeatures:
+    globalReturn: no
+    experimentalObjectRestSpread: no
+    jsx: no
+  sourceType: script
+
+rules:
+  strict:
+  - error
+  - safe
+
+overrides:
+  - files:
+    - src/**/*.js
+    - bin/*
+    parserOptions:
+      ecmaVersion: 6
+    env:
+      browser: no
+
+  - files:
+    - doc/**/*.js
+    env:
+      node: no

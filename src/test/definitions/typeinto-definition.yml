@@ -1,0 +1,9 @@
+links:
+  - link: "http://www.nav.no"
+    options:
+      commands:
+        - waitFor: '.siteheader'
+        - type:
+            into: "#site-search-input"
+            text: "Pensjon"
+            key: "enter"

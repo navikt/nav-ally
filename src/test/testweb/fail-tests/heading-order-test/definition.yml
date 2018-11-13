@@ -1,0 +1,4 @@
+links:
+  - link: "http://localhost:7777/heading-order-test"
+    options:
+      tags: "best-practice"

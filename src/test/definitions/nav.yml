@@ -1,0 +1,7 @@
+links:
+  - 'https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Kontakt+oss/kontakt-nav-på-telefon'
+  - 'https://www.nav.no/no/Person/Arbeid/Arbeidsledig+og+jobbsoker'
+  - 'https://www.nav.no/no/Person/Pensjon/Alderspensjon'
+  - link: 'https://www.nav.no'
+    options:
+      browser: "firefox"

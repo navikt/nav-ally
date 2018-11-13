@@ -1,0 +1,4 @@
+links:
+  - link: "http://localhost:7777/ok-tests/skip-link-test"
+    options:
+      tags: "best-practice"

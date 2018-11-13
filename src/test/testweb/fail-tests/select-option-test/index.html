@@ -1,0 +1,43 @@
+<html lang="no">
+<head>
+    <title>Test site - heading order</title>
+    <style>
+        #hiddenSection {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Validator Test Site</h1>
+    </header>
+    <main>
+        <h2>Header</h2>
+        <section id="inputSection">
+            <label id="typeSelectLbl" for="typeSelect">Select Option</label>
+            <select name="type" id="typeSelect" aria-labelledby="typeSelectLbl">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+            <button>Select</button>
+        </section>
+        <section id="hiddenSection">
+            <p>Hidden content.</p>
+        </section>
+    </main>
+    <footer>
+        <p id="footer">Footer section.</p>
+    </footer>
+</body>
+
+<script>
+    document.querySelector("#inputSection button").addEventListener("click", function(){
+        setTimeout(() => {
+            //document.querySelector("#hiddenSection").style.display = "block";
+            document.querySelector("#hiddenSection").style.visibility = "visible";
+        }, 10000);
+    });
+</script>
+
+</html>

@@ -1,0 +1,11 @@
+links:
+  - link: "http://localhost:7777/ok-tests/select-option-test"
+    options:
+      ignoreRules: 'css-orientation-lock'
+      commands:
+        - selectOption:
+            from: '#typeSelect'
+            option: 'c'
+        - clickOn: "#inputSection button"
+        - pause: 5000
+        - waitFor: '#hiddenSection'

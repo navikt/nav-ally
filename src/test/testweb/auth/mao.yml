@@ -1,0 +1,10 @@
+links:
+- link: 'https://tjenester-q6.nav.no/aktivitetsplan/'
+  options:
+    ignoreRules: 'hidden-content'
+    auth:
+      type: 'esso'
+      env: 'q6'
+      handler: './my-auth-handler'
+    commands:
+    - waitFor: '.aktivitetstavle'

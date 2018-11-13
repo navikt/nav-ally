@@ -1,0 +1,521 @@
+$ DEFINITION_FILE="./src/test/definitions/simple-definition.yml" npm run test-uu
+
+> uu-validator@1.0.0 test-uu /uu-validator
+> mocha e2e-test/test.js
+
+  UU Test
+
+Page: https://alphagov.github.io/accessibility-tool-audit/test-cases.html
+Total number issues (violations + occurrences): 55 accessibility issues detected.
+Total number issues that needs review: 46
+
+Report:
+--------------------------------------------------------------------------------
+There are 27 violation types on URL: https://alphagov.github.io/accessibility-tool-audit/test-cases.html
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: aria-roles
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/aria-roles?application=webdriverjs
+
+
+        HTML Element: <ol class="group" role="breadcrumbs">
+<li><a href="/">Home</a></li>
+<li><a href="/browse/housing-local-services">Housing and local services</a></li>
+<li><strong><a href="/browse/housing-local-services/local-councils">Local councils and services</a></strong></li>
+</ol>
+        DOM Element: #global-breadcrumb > ol[role="breadcrumbs"]
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: blink
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/blink?application=webdriverjs
+
+
+        HTML Element: <blink>
+        DOM Element: div:nth-child(36) > blink
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: button-name
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/button-name?application=webdriverjs
+
+
+        HTML Element: <button></button>
+        Message 1: Element has a value attribute and the value attribute is empty
+        Message 2: Element has no value attribute or the value attribute is empty
+        Message 3: Element does not have inner text that is visible to screen readers
+        Message 4: aria-label attribute does not exist or is empty
+        Message 5: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 6: Element's default semantics were not overridden with role="presentation"
+        Message 7: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(187) > button
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: checkboxgroup
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/checkboxgroup?application=webdriverjs
+
+
+        HTML Element: <input id="waste-type-1" name="waste-types" type="checkbox" value="waste-animal">
+        Message 1: All elements with the name "waste-types" do not reference the same element with aria-labelledby
+        Message 2: Element does not have a containing fieldset or ARIA group
+        DOM Element: #waste-type-1
+--------------------------------------------------------------------------------
+There are 5 instances of the following violation type: color-contrast
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/color-contrast?application=webdriverjs
+
+
+        HTML Element: <p class="low-contrast-small-aa">This small text does not have enough contrast with it's background</p>
+        Message 1: Element has insufficient color contrast of 4.37 (foreground color: #757980, background color: #ffffff, font size: 9.0pt, font weight: normal)
+        DOM Element: div:nth-child(21) > p.low-contrast-small-aa
+
+
+        HTML Element: <p class="low-contrast-large-aa">This small text does not have enough contrast with it's background</p>
+        Message 1: Element has insufficient color contrast of 3.4 (foreground color: #878c8c, background color: #ffffff, font size: 15.0pt, font weight: normal)
+        DOM Element: div:nth-child(23) > p.low-contrast-large-aa
+
+
+        HTML Element: <p class="low-contrast-small-aaa">This small text does not have enough contrast with it's background</p>
+        Message 1: Element has insufficient color contrast of 2.86 (foreground color: #9499a1, background color: #ffffff, font size: 9.0pt, font weight: normal)
+        DOM Element: div:nth-child(25) > p.low-contrast-small-aaa
+
+
+        HTML Element: <p class="low-contrast-large-aa">This small text does not have enough contrast with it's background</p>
+        Message 1: Element has insufficient color contrast of 3.4 (foreground color: #878c8c, background color: #ffffff, font size: 15.0pt, font weight: normal)
+        DOM Element: div:nth-child(27) > p.low-contrast-large-aa
+
+
+        HTML Element: <div class="validation-summary" role="alert">
+                You need to fix the errors on this page before continuing.
+            </div>
+        Message 1: Element has insufficient color contrast of 1.24 (foreground color: #ffffff, background color: #fae1e1, font size: 14.3pt, font weight: normal)
+        DOM Element: #wrapper > div:nth-child(218) > form > div[role="alert"]
+--------------------------------------------------------------------------------
+There are 2 instances of the following violation type: dlitem
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/dlitem?application=webdriverjs
+
+
+        HTML Element: <dt>html</dt>
+        Message 1: Description list item does not have a <dl> parent element
+        DOM Element: div:nth-child(88) > dt
+
+
+        HTML Element: <dd>a markup language for describing web documents</dd>
+        Message 1: Description list item does not have a <dl> parent element
+        DOM Element: div:nth-child(88) > dd
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: duplicate-id
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/duplicate-id?application=webdriverjs
+
+
+        HTML Element: <div id="nav">global nav</div>
+        Message 1: Document has multiple elements with the same id attribute: nav
+        DOM Element: div:nth-child(285) > div:nth-child(1)
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: empty-heading
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/empty-heading?application=webdriverjs
+
+
+        HTML Element: <h4></h4>
+        Message 1: Element does not have text that is visible to screen readers
+        Message 2: Element's default semantics were not overridden with role="presentation"
+        Message 3: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(75) > h4
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: frame-title
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/frame-title?application=webdriverjs
+
+
+        HTML Element: <iframe height="100" src="example-pages/demo.html" width="300" cd_frame_id_="e6da9125322a09451cdf7be92059c97c"></iframe>
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Element has no title attribute or the title attribute is empty
+        Message 4: Element's default semantics were not overridden with role="presentation"
+        Message 5: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(269) > iframe[src$="demo.html"]
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: heading-order
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/heading-order?application=webdriverjs
+
+
+        HTML Element: <h5>Heading 5</h5>
+        Message 1: Heading order invalid
+        DOM Element: div:nth-child(81) > h5
+--------------------------------------------------------------------------------
+There are 11 instances of the following violation type: href-no-hash
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/href-no-hash?application=webdriverjs
+
+
+        HTML Element: <a class="not-visible-outline-link" href="#">This links has visible focus</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div:nth-child(29) > a
+
+
+        HTML Element: <a href="#">A normal link</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: .links-by-colour-alone > a:nth-child(1)
+
+
+        HTML Element: <a class="colour-alone-link" href="#">Link only identifiable by colour alone</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: .links-by-colour-alone > a.colour-alone-link
+
+
+        HTML Element: <a href="#">Do something</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div:nth-child(162) > a
+
+
+        HTML Element: <a class="open-lightbox-close-button" href="#">Open lightbox</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div:nth-child(238) > a.open-lightbox-close-button
+
+
+        HTML Element: <a class="first" href="#">First link</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div > a.first
+
+
+        HTML Element: <a class="second" href="#">Second link</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div > a.second
+
+
+        HTML Element: <a class="Third" href="#">Third link</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div > a.Third
+
+
+        HTML Element: <a class="open-lightbox-unescapable" href="#">Open lightbox</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div:nth-child(254) > a.open-lightbox-unescapable
+
+
+        HTML Element: <a class="open-lightbox-focus-far" href="#">Open lightbox</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div:nth-child(262) > a
+
+
+        HTML Element: <a class="open-lightbox-not-focused" href="#">Open lightbox</a>
+        Message 1: Anchor has an href value of #
+        DOM Element: div:nth-child(264) > a
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: html-has-lang
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/html-has-lang?application=webdriverjs
+
+
+        HTML Element: <html>
+        Message 1: The <html> element does not have a lang attribute
+        DOM Element: div:nth-child(139) > iframe[src$="gwoQRKCEHgY"]
+        DOM Element: html
+--------------------------------------------------------------------------------
+There are 2 instances of the following violation type: image-alt
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/image-alt?application=webdriverjs
+
+
+        HTML Element: <img src="assets/test_images/bbc-blocks-dark.png">
+        Message 1: Element does not have an alt attribute
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element has no title attribute or the title attribute is empty
+        Message 5: Element's default semantics were not overridden with role="presentation"
+        Message 6: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(120) > img[src$="bbc-blocks-dark.png"]
+
+
+        HTML Element: <img src="/mwg-internal/de5fs23hu73ds/files/default/img/logo_mwg.png">
+        Message 1: Element does not have an alt attribute
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element has no title attribute or the title attribute is empty
+        Message 5: Element's default semantics were not overridden with role="presentation"
+        Message 6: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(139) > iframe[src$="gwoQRKCEHgY"]
+        DOM Element: a > img[src$="logo_mwg.png"]
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: image-redundant-alt
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/image-redundant-alt?application=webdriverjs
+
+
+        HTML Element: <a href="https://en.wikipedia.org/wiki/Red_panda">
+<img alt="Red Panda" height="165" src="assets/test_images/red_panda.jpg" width="220">
+            Red Panda
+        </a>
+        DOM Element: div:nth-child(174) > a[href$="Red_panda"]
+--------------------------------------------------------------------------------
+There are 2 instances of the following violation type: input-image-alt
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/input-image-alt?application=webdriverjs
+
+
+        HTML Element: <input src="assets/test_images/submit.png" type="image">
+        Message 1: Element has no alt attribute or the alt attribute is empty
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element has no title attribute or the title attribute is empty
+        DOM Element: div:nth-child(185) > input[type="image"][src$="submit.png"]
+
+
+        HTML Element: <input alt="" src="assets/test_images/submit.png" type="image">
+        Message 1: Element has no alt attribute or the alt attribute is empty
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element has no title attribute or the title attribute is empty
+        DOM Element: div:nth-child(191) > input[type="image"][src$="submit.png"]
+--------------------------------------------------------------------------------
+There are 10 instances of the following violation type: label
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/label?application=webdriverjs
+
+
+        HTML Element: <input id="missing-labels-month" type="text">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #missing-labels-month
+
+
+        HTML Element: <input id="missing-labels-year" type="text">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #missing-labels-year
+
+
+        HTML Element: <input type="text">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: div:nth-child(204) > input[type="text"]
+
+
+        HTML Element: <input id="label-for-not-matching" type="checkbox" value="yes">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #label-for-not-matching
+
+
+        HTML Element: <input id="empty" type="text" value="">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #empty
+
+
+        HTML Element: <input id="two-labels-day" type="text">
+        DOM Element: #two-labels-day
+
+
+        HTML Element: <input id="nationality_british" name="nationality.british" type="checkbox" value="true">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #nationality_british
+
+
+        HTML Element: <input id="nationality_irish" name="nationality.irish" type="checkbox" value="true">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #nationality_irish
+
+
+        HTML Element: <input id="nationality_hasOtherCountry" name="nationality.hasOtherCountry" type="checkbox" value="true">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #nationality_hasOtherCountry
+
+
+        HTML Element: <input id="search-main" name="q" placeholder="Search" type="search">
+        Message 1: aria-label attribute does not exist or is empty
+        Message 2: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 3: Form element does not have an implicit (wrapped) <label>
+        Message 4: Form element does not have an explicit <label>
+        Message 5: Element has no title attribute or the title attribute is empty
+        DOM Element: #search-main
+--------------------------------------------------------------------------------
+There are 3 instances of the following violation type: link-name
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/link-name?application=webdriverjs
+
+
+        HTML Element: <a href="http://www.bbc.co.uk"><img alt="" src="assets/test_images/bbc-blocks-dark.png"></a>
+        Message 1: Element does not have text that is visible to screen readers
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element's default semantics were not overridden with role="presentation"
+        Message 5: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(144) > a[href$="www.bbc.co.uk"]
+
+
+        HTML Element: <a href="http://www.google.com"></a>
+        Message 1: Element does not have text that is visible to screen readers
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element's default semantics were not overridden with role="presentation"
+        Message 5: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(164) > a[href$="www.google.com"]
+
+
+        HTML Element: <a href="http://www.mcafee.com">
+        <img src="/mwg-internal/de5fs23hu73ds/files/default/img/logo_mwg.png"></a>
+        Message 1: Element does not have text that is visible to screen readers
+        Message 2: aria-label attribute does not exist or is empty
+        Message 3: aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible
+        Message 4: Element's default semantics were not overridden with role="presentation"
+        Message 5: Element's default semantics were not overridden with role="none"
+        DOM Element: div:nth-child(139) > iframe[src$="gwoQRKCEHgY"]
+        DOM Element: td > a[href$="www.mcafee.com"]
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: list
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/list?application=webdriverjs
+
+
+        HTML Element: <ul>
+<ul>
+<li>improperly nested</li>
+</ul>
+</ul>
+        DOM Element: div:nth-child(90) > ul
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: listitem
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/listitem?application=webdriverjs
+
+
+        HTML Element: <li>
+            no parent
+        </li>
+        Message 1: List item does not have a <ul>, <ol> or role="list" parent element
+        DOM Element: div:nth-child(84) > li
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: marquee
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/marquee?application=webdriverjs
+
+
+        HTML Element: <marquee>The BLINK and MARQUEE element animates content in a way that cannot be overridden or disabled by the user.</marquee>
+        DOM Element: div:nth-child(40) > marquee
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: radiogroup
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/radiogroup?application=webdriverjs
+
+
+        HTML Element: <input id="radio-inline-1" name="radio-inline-group" type="radio" value="Yes">
+        Message 1: All elements with the name "radio-inline-group" do not reference the same element with aria-labelledby
+        Message 2: Element does not have a containing fieldset or ARIA group
+        DOM Element: #radio-inline-1
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: region
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/region?application=webdriverjs
+
+
+        HTML Element: <html lang="en">
+        Message 1: Content not contained by an ARIA landmark
+        DOM Element: html
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: skip-link
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/skip-link?application=webdriverjs
+
+
+        HTML Element: <a id="logo" class="content" href="index.html">Accessibility tool audit</a>
+        Message 1: No valid skip link found
+        DOM Element: #logo
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: tabindex
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/tabindex?application=webdriverjs
+
+
+        HTML Element: <a href="page.html" tabindex="5">A link with a tabindex greater than 0</a>
+        Message 1: Element has a tabindex greater than 0
+        DOM Element: div:nth-child(242) > a[href$="page.html"]
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: table-fake-caption
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/table-fake-caption?application=webdriverjs
+
+
+        HTML Element: <table>
+        DOM Element: div:nth-child(103) > table
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: td-has-header
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/td-has-header?application=webdriverjs
+
+
+        HTML Element: <table>
+<caption>Shelly's Daughters</caption>
+<thead>
+<tr>
+<td>Name</td>
+<td>Age</td>
+<td>Birthday</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jackie</td>
+<td>5</td>
+<td>April 5</td>
+</tr>
+<tr>
+<td>Beth</td>
+<td>8</td>
+<td>January 14</td>
+</tr>
+</tbody>
+</table>
+        DOM Element: div:nth-child(101) > table
+--------------------------------------------------------------------------------
+There is one instance of the following violation type: valid-lang
+Help is available here: https://dequeuniversity.com/rules/axe/2.5/valid-lang?application=webdriverjs
+
+
+        HTML Element: <span lang="frrr">"Allons, Madame plaisante!"</span>
+        DOM Element: #wrapper > div:nth-child(59) > p > span
+--------------------------------------------------------------------------------
+    End of violations on: https://alphagov.github.io/accessibility-tool-audit/test-cases.html
+--------------------------------------------------------------------------------
+
+
+
+    1) easy should have no accessibility violations
+
+
+  0 passing (8s)
+  1 failing
+
+  1) UU Test
+       easy should have no accessibility violations:
+
+      Uncaught AssertionError [ERR_ASSERTION]: 55 == 0
+      + expected - actual
+
+      -55
+      +0
+
+      at val.assertViolations.results (e2e-test\test.js:28:52)
+      at Validator.assertViolations (index.js:102:5)
+      at e2e-test\test.js:28:17
+      at index.js:74:17
+      at ManagedPromise.invokeCallback_ (node_modules\selenium-webdriver\lib\promise.js:1376:14)
+      at TaskQueue.execute_ (node_modules\selenium-webdriver\lib\promise.js:3084:14)
+      at TaskQueue.executeNext_ (node_modules\selenium-webdriver\lib\promise.js:3067:27)
+      at asyncRun (node_modules\selenium-webdriver\lib\promise.js:2927:27)
+      at node_modules\selenium-webdriver\lib\promise.js:668:7
+      at <anonymous>
+      at process._tickCallback (internal/process/next_tick.js:188:7)
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! uu-validator@1.0.0 test-uu: `mocha e2e-test/test.js`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the uu-validator@1.0.0 test-uu script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
