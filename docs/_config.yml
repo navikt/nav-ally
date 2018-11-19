@@ -7,8 +7,8 @@ description: >
 lang: en-US
 
 baseurl: "/guide" # the subpath of your site, e.g. /blog/
-url: https://github.com/navikt/nav-ally # the base hostname & protocol for your site
-git_address: https://github.com/navikt/nav-ally
+url: https://github.com/navikt/nav-ally/docs # the base hostname & protocol for your site
+git_address: https://github.com/navikt/nav-ally/docs
 git_edit_address: https://github.com/navikt/nav-ally/docs
 
 # theme options from https://bootswatch.com/
