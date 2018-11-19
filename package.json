@@ -50,11 +50,11 @@
   ],
   "dependencies": {
     "axe-core": "3.1.2",
-    "axe-webdriverjs": "2.0.3",
+    "axe-webdriverjs": "2.1.0",
     "chai": "4.2.0",
     "http-server": "0.11.1",
     "js-yaml": "3.12.0",
-    "mocha": "4.0.1",
+    "mocha": "5.2.0",
     "node-fetch": "2.3.0",
     "selenium-webdriver": "4.0.0-alpha.1",
     "start-server-and-test": "1.7.9",

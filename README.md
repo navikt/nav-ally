@@ -22,18 +22,8 @@ The tool can be a part of a build pipeline, but can also be used standalone to t
     Windows: Add these system environment variables through the control panel under advanced system settings.  
     
     Important: The webdriver must be named "chromedriver" or "geckodriver" in order to be discovered automatically. 
-    
-3. Export the paths to the Chrome and/or Firefox binaries (the browser executable, not the webdriver):
-    
-    On Linux/Unix systems and Docker-images:
-    
-    Chrome: `export CHROME_BINARY=/path/to/chrome/browser/executable`
-    Firefox: `export FIREFOX_BINARY=/path/to/firefox/browser/executable`
-    
-    On Mac:  
-    Chrome: `export CHROME_BINARY="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"`
-    
-4. Run following command to start the Validator with a given definition file:
+        
+3. Run following command to start the Validator with a given definition file:
     `$ DEFINITION_FILE="./src/test/definitions/simple-definition.yml" npm start`  
 
     You can also start the validator with the run script:

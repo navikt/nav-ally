@@ -35,6 +35,12 @@ program
     /^(yes|no|true|false)$/i,
     'no'
   )
+  .option(
+      '-w, --warnings <value>',
+      'if warnings should fail the validation',
+      /^(yes|no|true|false)$/i,
+      'no'
+  )
   .parse(process.argv);
 
 if (program.definitionFile) {
@@ -81,6 +87,13 @@ yesOrNo(
   '> Running with debug info turned off.',
   '> Invalid value given to flag -d / --debug-info.',
   'DEBUG'
+);
+yesOrNo(
+    program.warnings,
+    '> Running with warnings turned on.',
+    '> Running with warnings turned off.',
+    '> Invalid value given to flag -d / --warnings.',
+    'ASSERT_WARNINGS'
 );
 
 Validator.runValidator();

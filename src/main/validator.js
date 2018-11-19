@@ -193,7 +193,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
     new AxeBuilder(testBrowser)
       .withTags(vtags)
       .disableRules(disabledRules)
-      .analyze(async function(pageResults) {
+      .analyze(async function(err, pageResults) {
         results.push({link: page.link, desc: page.desc, result: pageResults});
         self.__foreachAsync(pages, index + 1, resolve);
       });
