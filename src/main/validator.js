@@ -6,6 +6,12 @@ const Firefox = require('selenium-webdriver/firefox');
 
 const AxeBuilder = require('axe-webdriverjs');
 
+const chromedriver = require('chromedriver');
+process.env.chromedriver = chromedriver.path;
+
+const geckodriver = require('geckodriver');
+process.env.geckodriver = geckodriver.path;
+
 const Until = SeleniumWebDriver.until;
 
 const By = SeleniumWebDriver.By;
@@ -327,7 +333,7 @@ Validator.prototype.createFirefox = function(headless) {
     options.headless();
   }
   options.setAcceptInsecureCerts(true);
-  builder.withCapabilities(options);
+  builder.setFirefoxOptions(options);
   return builder.build();
 };
 
