@@ -1,0 +1,5 @@
+links:
+  - link: 'http://www.vg.no'
+    options:
+      commands:
+        - waitFor: 'body'
