@@ -1,1 +1,1 @@
-Sitemap: https://github.com/navikt/pus-uu-validator/guide/sitemap.xml
+Sitemap: https://github.com/navikt/nav-ally/docs/guide/sitemap.xml
