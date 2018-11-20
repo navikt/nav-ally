@@ -1,1 +1,0 @@
-Sitemap: https://github.com/navikt/nav-ally/docs/guide/sitemap.xml
