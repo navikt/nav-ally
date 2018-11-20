@@ -1,7 +1,6 @@
 links:
-- link: 'https://tjenester-q6.nav.no/aktivitetsplan/'
+- link: 'https://url/here'
   options:
-    ignoreRules: 'hidden-content'
     auth:
       type: 'esso'
       env: 'q6'
