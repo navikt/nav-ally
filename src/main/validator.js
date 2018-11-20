@@ -98,7 +98,7 @@ function Validator(inputFile, userConfig) {
  */
 Validator.prototype.run = function(printToConsole = true) {
   const self = this;
-    console.time('validation execution time');
+  console.time('validation execution time');
   return new Promise(function(resolve) {
     self.__validate(self.inputFile.links, () => resolve());
   })
@@ -210,10 +210,10 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
         self.__foreachAsync(pages, index + 1, resolve);
       })
       .catch(err => {
-          self.__exit(1, {
-              msg: 'An error occurred while running the validator.',
-              err
-          });
+        self.__exit(1, {
+          msg: 'An error occurred while running the validator.',
+          err
+        });
       });
   } catch (err) {
     this.__exit(1, {
