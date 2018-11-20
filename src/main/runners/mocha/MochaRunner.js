@@ -6,9 +6,7 @@ let Mocha = require('mocha');
 exports.runValidator = function() {
   let mocha = new Mocha();
 
-  let testSuite = 'src/main/runners/mocha/MochaSuite.js';
-
-  mocha.addFile(testSuite);
+  mocha.addFile(require.resolve('./MochaSuite'));
 
   mocha.run(function(failures) {
     process.exitCode = failures ? -1 : 0; // exit with non-zero status if there were failures
