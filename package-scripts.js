@@ -8,21 +8,17 @@ module.exports = {
         description: 'Lint code and Markdown documentation'
       },
       code: {
-        script: 'eslint "./src/**/*" "bin/*"',
+        script: 'eslint "./src/**/*.js" "bin/*.js"',
         description: 'Run ESLint linter'
       },
       codefix: {
-          script: 'eslint "./src/**/*" "bin/*" --fix',
+          script: 'eslint "./src/**/*.js" "bin/*.js" --fix',
           description: 'Run ESLint linter with fix'
-      },
-      markdown: {
-        script: 'markdownlint "*.md" "docs/**/*.md" ".github/*.md"',
-        description: 'Run markdownlint linter'
       }
     },
     reformat: {
       script:
-        'prettier-eslint --write "*.js" "src/**/*.js" "bin/*" "scripts/*"',
+        'prettier-eslint --write "*.js" "src/**/*.js" "bin/*.js"',
       description: 'Reformat codebase with Prettier'
     },
     docs: {

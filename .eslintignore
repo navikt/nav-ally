@@ -1,4 +1,5 @@
 coverage/
 docs/
 src/test/definitions
-src/test/testweb
+src/test/validation
+src/test/validator
