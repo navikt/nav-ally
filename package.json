@@ -36,11 +36,7 @@
   },
   "files": [
     "bin",
-    "src",
-    "driver",
-    "lib",
-    "index.js",
-    "run.sh"
+    "src"
   ],
   "homepage": "https://github.com/navikt/nav-ally",
   "keywords": [
