@@ -11,25 +11,28 @@ The tool can be a part of a build pipeline, but can also be used standalone to t
 
 ## <a id="quick_start"> Quick start
 
-1. Clone the project   
-    `git clone https://github.com/navikt/nav-ally.git`  
-    `cd nav-ally`  
+1. Add the module to your project
 
-2. Exported the path to the Webdriver you want to use (one or both):  
-    Chrome: `export PATH=$PATH:/path/to/chromedriver`  
-    Firefox: `export PATH=$PATH:/path/to/geckodriver`  
+    `npm install --save-dev nav-ally`
 
-    Windows: Add these system environment variables through the control panel under advanced system settings.  
+2. Create a Yaml-based definition file and add it anywhere in your project:
 
-    Important: The webdriver must be named "chromedriver" or "geckodriver" in order to be discovered automatically.
+    ```
+    $ touch wcag.yml
+    $ nano wcag.yml
+    ```
 
-3. Run following command to start the Validator with a given definition file:
-    `$ DEFINITION_FILE="./src/test/definitions/simple-definition.yml" npm start`  
+    Paste in the following example content:
+    
+    ```yaml
+    links:
+     - "http://google.com"
+    ```
 
-    You can also start the validator with the run script:
-    `$ sh run.sh ./src/test/definitions/simple-definition.yml`
+3. Create a run script in your package.json:
 
-Sample commandline output: [example-output.txt](example-output.txt)
+    "wcag-test":"nav-ally -f wcag.yml"
+
 <br />
 
 ## Documentation
