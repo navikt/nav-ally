@@ -6,7 +6,7 @@ description: >
   providing documentation and blog post pages.
 lang: en-US
 
-baseurl: "/guide" # the subpath of your site, e.g. /blog/
+baseurl: "/" # the subpath of your site, e.g. /blog/
 url: https://navikt.github.io/nav-ally # the base hostname & protocol for your site
 git_address: https://github.com/navikt/nav-ally
 git_edit_address: https://github.com/navikt/nav-ally/docs
