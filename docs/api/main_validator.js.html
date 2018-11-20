@@ -1,4 +1,47 @@
-const SeleniumWebDriver = require('selenium-webdriver');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>main/validator.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="InputLoader.html">InputLoader</a><ul class='methods'><li data-type='method'><a href="InputLoader.html#.loadInputFromEnvironment">loadInputFromEnvironment</a></li></ul></li><li><a href="Validator.html">Validator</a><ul class='methods'><li data-type='method'><a href="Validator.html#__addBrowser">__addBrowser</a></li><li data-type='method'><a href="Validator.html#__authenticate">__authenticate</a></li><li data-type='method'><a href="Validator.html#__commandChaining">__commandChaining</a></li><li data-type='method'><a href="Validator.html#__commands">__commands</a></li><li data-type='method'><a href="Validator.html#__commandSelector">__commandSelector</a></li><li data-type='method'><a href="Validator.html#__countAllInCompleteOccurrences">__countAllInCompleteOccurrences</a></li><li data-type='method'><a href="Validator.html#__countAllViolationOccurrences">__countAllViolationOccurrences</a></li><li data-type='method'><a href="Validator.html#__countViolationOccurrences">__countViolationOccurrences</a></li><li data-type='method'><a href="Validator.html#__getBrowser">__getBrowser</a></li><li data-type='method'><a href="Validator.html#__selectOption">__selectOption</a></li><li data-type='method'><a href="Validator.html#__validate">__validate</a></li><li data-type='method'><a href="Validator.html#closeAllBrowsers">closeAllBrowsers</a></li><li data-type='method'><a href="Validator.html#createChrome">createChrome</a></li><li data-type='method'><a href="Validator.html#createDefaultBrowser">createDefaultBrowser</a></li><li data-type='method'><a href="Validator.html#createFirefox">createFirefox</a></li><li data-type='method'><a href="Validator.html#getValidationErrors">getValidationErrors</a></li><li data-type='method'><a href="Validator.html#getViolationsOnPage">getViolationsOnPage</a></li><li data-type='method'><a href="Validator.html#getWarnings">getWarnings</a></li><li data-type='method'><a href="Validator.html#getWarningsOnPage">getWarningsOnPage</a></li><li data-type='method'><a href="Validator.html#printReportToConsole">printReportToConsole</a></li><li data-type='method'><a href="Validator.html#reuseBrowser">reuseBrowser</a></li><li data-type='method'><a href="Validator.html#run">run</a></li><li data-type='method'><a href="Validator.html#startNewBrowser">startNewBrowser</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ASSERT_WARNINGS">ASSERT_WARNINGS</a></li><li><a href="global.html#BROWSER">BROWSER</a></li><li><a href="global.html#CHROME_BINARY">CHROME_BINARY</a></li><li><a href="global.html#DEBUG">DEBUG</a></li><li><a href="global.html#DEFINITION_FILE">DEFINITION_FILE</a></li><li><a href="global.html#DETAILED_REPORT">DETAILED_REPORT</a></li><li><a href="global.html#FIREFOX_BINARY">FIREFOX_BINARY</a></li><li><a href="global.html#HEADLESS">HEADLESS</a></li><li><a href="global.html#NAME">NAME</a></li><li><a href="global.html#REUSE_BROWSERS">REUSE_BROWSERS</a></li><li><a href="global.html#runTestSuite">runTestSuite</a></li><li><a href="global.html#runValidator">runValidator</a></li><li><a href="global.html#TAGS">TAGS</a></li><li><a href="global.html#testRun">testRun</a></li><li><a href="global.html#TIMEOUT">TIMEOUT</a></li><li><a href="global.html#WAIT_TIMEOUT">WAIT_TIMEOUT</a></li><li><a href="global.html#YAML_DEFINITION">YAML_DEFINITION</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">main/validator.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const SeleniumWebDriver = require('selenium-webdriver');
 
 const Chrome = require('selenium-webdriver/chrome');
 
@@ -55,7 +98,7 @@ SeleniumWebDriver.promise.USE_PROMISE_MANAGER = false;
  * @param inputFile A Javascript array with a list of links and their options.
  * @param userConfig Optional user configuration that, if set, overrides default config with user configuration.
  *
- * @example <caption>Config</caption>
+ * @example &lt;caption>Config&lt;/caption>
  * defaultBrowser: The default browser to start if none is configured by the user
  * headless: True or false value to run in headless mode or not
  * timeout: Browser time in ms
@@ -150,7 +193,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   let page = pages[index];
   const options = page.options;
 
-  if (REUSE_BROWSERS || (options && options.reuseBrowser)) {
+  if (REUSE_BROWSERS || (options &amp;&amp; options.reuseBrowser)) {
     // This code reuses the same browser for all the tests.
     // NB: Be aware of potential previous app states!
     testBrowser = this.reuseBrowser(options);
@@ -162,7 +205,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   log('Setting browser timeout (ms): ' + this.scriptTimeout);
   await this.setTimeout(testBrowser, this.scriptTimeout);
 
-  if (options && options.auth) {
+  if (options &amp;&amp; options.auth) {
     try {
       await this.__authenticate(testBrowser, options.auth, page.link);
     } catch (err) {
@@ -183,7 +226,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
 
   log('Preforming pre-validation commands.');
   try {
-    if (options && options.commands) {
+    if (options &amp;&amp; options.commands) {
       await this.__commands(testBrowser, options.commands);
     }
   } catch (err) {
@@ -194,10 +237,10 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   }
 
   const disabledRules =
-    options && options.ignoreRules ? options.ignoreRules.split(',') : [];
+    options &amp;&amp; options.ignoreRules ? options.ignoreRules.split(',') : [];
   // disabledRules.push("css-orientation-is-not-locked"); // consider disabling this rule
 
-  const vtags = options && options.tags ? options.tags.split(',') : tags;
+  const vtags = options &amp;&amp; options.tags ? options.tags.split(',') : tags;
   log('Running UU validation with tags: ' + vtags); // + ", without rules: " + disabledRules);
 
   try {
@@ -230,7 +273,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
  * @returns {SeleniumWebDriver} An existing browser from the cache, or new browser if none exists.
  */
 Validator.prototype.reuseBrowser = function(options) {
-  if (options && options.browser) {
+  if (options &amp;&amp; options.browser) {
     const overriddenBrowser = options.browser.toLowerCase();
     let cachedBrowser = this.__getBrowser(overriddenBrowser);
     if (cachedBrowser) return cachedBrowser;
@@ -261,7 +304,7 @@ Validator.prototype.reuseBrowser = function(options) {
  * @returns {SeleniumWebDriver} A new WebDriver-browser.
  */
 Validator.prototype.startNewBrowser = function(options) {
-  if (options && options.browser) {
+  if (options &amp;&amp; options.browser) {
     const overriddenBrowser = options.browser.toLowerCase();
     let newBrowser = {};
     if (overriddenBrowser === 'chrome')
@@ -316,7 +359,7 @@ Validator.prototype.createChrome = function(headless) {
   let builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
   const options = new Chrome.Options();
   if (headless) {
-    if (CHROME_BINARY && CHROME_BINARY !== undefined) {
+    if (CHROME_BINARY &amp;&amp; CHROME_BINARY !== undefined) {
       options.setChromeBinaryPath(CHROME_BINARY);
       log('Chrome running with binary: ' + CHROME_BINARY);
     }
@@ -338,7 +381,7 @@ Validator.prototype.createFirefox = function(headless) {
   let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
   const options = new Firefox.Options();
   if (headless) {
-    if (FIREFOX_BINARY && FIREFOX_BINARY !== undefined) {
+    if (FIREFOX_BINARY &amp;&amp; FIREFOX_BINARY !== undefined) {
       options.setBinary(FIREFOX_BINARY);
       log('Firefox running with binary: ' + FIREFOX_BINARY);
     }
@@ -370,7 +413,7 @@ Validator.prototype.setTimeout = function(browser, timeout) {
 /**
  * Closes all open browser windows.
  *
- * @returns {Promise<any[] | void>} A promise that resolves when all open browsers are closed.
+ * @returns {Promise&lt;any[] | void>} A promise that resolves when all open browsers are closed.
  */
 Validator.prototype.closeAllBrowsers = function() {
   const quits = [];
@@ -623,7 +666,7 @@ Validator.prototype.__commandSelector = function(browser, chainElement) {
  * Use this function to load your own authentication handler.
  * In your definition file, add the "auth" option. See the example.
  *
- * @example <caption>my-definition.js</caption>
+ * @example &lt;caption>my-definition.js&lt;/caption>
  * links:
      - link: 'https://www.nav.no'
        options:
@@ -633,7 +676,7 @@ Validator.prototype.__commandSelector = function(browser, chainElement) {
            handler: './my-auth-handler'
          commands:
          - waitFor: 'body'
- * @example <caption>my-auth-handler.js</caption>
+ * @example &lt;caption>my-auth-handler.js&lt;/caption>
  * exports.handleAuthentication = function(browser, options) {
  *     // implement your own handler here
  * }
@@ -641,7 +684,7 @@ Validator.prototype.__commandSelector = function(browser, chainElement) {
  * @param browser A SeleniumWebDriver browser
  * @param authOptions The 'auth' field from the input definition file.
  * @param pageLink The link to the page that should be authenticated.
- * @returns {Promise<*>}
+ * @returns {Promise&lt;*>}
  */
 Validator.prototype.__authenticate = async function(
   browser,
@@ -820,7 +863,7 @@ Validator.prototype.__switchFrame = function(browser, frame) {
 
 Validator.prototype.__pause = function(browser, time) {
   const stop = new Date().getTime() + time;
-  while (new Date().getTime() < stop) {}
+  while (new Date().getTime() &lt; stop) {}
   return Promise.resolve(true);
 };
 
@@ -850,7 +893,7 @@ Validator.prototype.__keyboard = function(
 
 Validator.prototype.__keytype = function(key, keyCombo) {
   // key combination with stateful and stateless keys
-  if (key.toLowerCase() === 'combo' && keyCombo && keyCombo.length > 0)
+  if (key.toLowerCase() === 'combo' &amp;&amp; keyCombo &amp;&amp; keyCombo.length > 0)
     return this.__keyCombo(keyCombo);
   // stateless keys
   else if (key.toLowerCase() === 'tab') return SeleniumWebDriver.Key.TAB;
@@ -920,3 +963,26 @@ process.on('unhandledRejection', err => {
 });
 
 module.exports = Validator;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+
+
+</body>
+</html>

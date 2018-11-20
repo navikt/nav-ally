@@ -28,7 +28,7 @@ module.exports = {
     docs: {
       default: {
         script:
-          'nps docs.prebuild && bundle exec jekyll build --source ./docs --destination ./docs --config ./docs/_config.yml --safe --drafts',
+          'nps docs.prebuild && bundle exec jekyll build --source ./docs --destination ./docs/_site --config ./docs/_config.yml --safe --drafts',
         description: 'Build documentation'
       },
       prebuild: {

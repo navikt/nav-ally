@@ -67,13 +67,13 @@ The definition file consist of a list of URL's and optional commands that you ca
 ### <a id="simple_example"> Simple examples
 This is the simplest form of a definition file. It consists only of an array of links. 
 
-Yaml - see [simple-definition.yml](src/test/definitions/simple-definition.yml):
+Yaml - see [simple-definition.yml](src/test/definitions/alphagov.yml):
 ```yaml
     links:
       - link: 'https://alphagov.github.io/accessibility-tool-audit/test-cases.html'
 ```
 
-Javascript - see [simple-definition.js](src/test/definitions/simple-definition.js):
+Javascript - see [simple-definition.js](src/test/definitions/alphagov.js):
 ```javascript
     exports.links = [
         {link: 'https://alphagov.github.io/accessibility-tool-audit/test-cases.html'}
