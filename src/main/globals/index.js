@@ -96,15 +96,6 @@ const CHROME_BINARY = process.env.CHROME_BINARY;
  */
 const FIREFOX_BINARY = process.env.FIREFOX_BINARY;
 
-/**
- * If set to true, will reuse an already created browser.
- * This can reduce execution time, but be aware of previous
- * application states.
- * @type {string}
- * @constant
- */
-const REUSE_BROWSERS = process.env.REUSE_BROWSERS || false;
-
 module.exports = {
   DEBUG,
   NAME,
@@ -118,6 +109,5 @@ module.exports = {
   TAGS,
   YAML_DEFINITION,
   CHROME_BINARY,
-  FIREFOX_BINARY,
-  REUSE_BROWSERS
+  FIREFOX_BINARY
 };

@@ -1,7 +1,7 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-let runner = require('../main/runners/mocha/MochaRunner');
+let runner = require('../../main/runners/mocha/MochaRunner');
 
 // set options
 process.env.HEADLESS = true;
@@ -28,7 +28,7 @@ function runTestSuite(testSites) {
 
     // safely read in the test case yaml config
     const yamlObj = yaml.safeLoad(
-      fs.readFileSync(`./src/test/testweb/${testSite}/definition.yml`)
+      fs.readFileSync(`./src/test/validation/${testSite}/definition.yml`)
     );
     console.log('YAML object loaded:', yamlObj.links);
 

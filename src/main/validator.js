@@ -24,7 +24,6 @@ const {
   DEBUG,
   CHROME_BINARY,
   FIREFOX_BINARY,
-  REUSE_BROWSERS,
   TAGS,
   TIMEOUT,
   ASSERT_WARNINGS,
@@ -137,7 +136,6 @@ Validator.prototype.__validate = async function(pages, resolve) {
  */
 Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   const self = this;
-  let testBrowser = this.browser;
 
   // stop the recursion when all pages are validated
   if (index >= pages.length) {
@@ -150,14 +148,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   let page = pages[index];
   const options = page.options;
 
-  if (REUSE_BROWSERS || (options && options.reuseBrowser)) {
-    // This code reuses the same browser for all the tests.
-    // NB: Be aware of potential previous app states!
-    testBrowser = this.reuseBrowser(options);
-  } else {
-    // This code starts a new browser for all tests
-    testBrowser = this.startNewBrowser(options);
-  }
+  let testBrowser = this.startNewBrowser(options);
 
   log('Setting browser timeout (ms): ' + this.scriptTimeout);
   await this.setTimeout(testBrowser, this.scriptTimeout);
@@ -224,37 +215,6 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
 };
 
 /**
- * Reuse a WebDriver session instead of creating a new one.
- *
- * @param options Extra options set in the definition file.
- * @returns {SeleniumWebDriver} An existing browser from the cache, or new browser if none exists.
- */
-Validator.prototype.reuseBrowser = function(options) {
-  if (options && options.browser) {
-    const overriddenBrowser = options.browser.toLowerCase();
-    let cachedBrowser = this.__getBrowser(overriddenBrowser);
-    if (cachedBrowser) return cachedBrowser;
-    else {
-      let newCachedBrowser = {};
-      if (overriddenBrowser === 'chrome')
-        newCachedBrowser = this.createChrome(this.headlessBrowser);
-      if (overriddenBrowser === 'firefox')
-        newCachedBrowser = this.createFirefox(this.headlessBrowser);
-      this.__addBrowser(newCachedBrowser, overriddenBrowser);
-      return newCachedBrowser;
-    }
-  } else {
-    const cachedBrowser = this.__getBrowser(this.defaultBrowserName);
-    if (cachedBrowser) return cachedBrowser;
-    else {
-      let newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
-      this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
-      return newCachedBrowser;
-    }
-  }
-};
-
-/**
  * Starts a completely new browser.
  *
  * @param options Extra options set in the definition file.
@@ -275,22 +235,6 @@ Validator.prototype.startNewBrowser = function(options) {
     this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
     return newCachedBrowser;
   }
-};
-
-/**
- * Get a browser from the cache.
- *
- * @memberOf Validator
- * @param browserName The key to store the browser with in the cache.
- * @returns {SeleniumWebDriver | undefined} A WebDriver-browser, or undefined if no browser was found.
- */
-Validator.prototype.__getBrowser = function(browserName) {
-  // return an existing browser window
-  const cachedBrowser = this.browsers.find(
-    cached => cached.name === browserName
-  );
-  if (cachedBrowser) return cachedBrowser.binary;
-  return undefined;
 };
 
 /**
@@ -680,10 +624,6 @@ Validator.prototype.__authenticate = async function(
 
 Validator.prototype.setAuthenticationHandler = function(authenticationHandler) {
   this.authenticationHandler = authenticationHandler;
-};
-
-Validator.prototype.setDirname = function(dir) {
-  this.definitionFileDir = dir;
 };
 
 /**

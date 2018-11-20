@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-var program = require('commander');
-var path = require('path');
-var fs = require('fs');
-var exists = fs.existsSync || path.existsSync;
+const program = require('commander');
+const path = require('path');
+const fs = require('fs');
+const exists = fs.existsSync || path.existsSync;
 let Validator = require('../src/main/runners/mocha/MochaRunner');
 const cwd = process.cwd();
 
