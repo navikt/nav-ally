@@ -1,6 +1,6 @@
 {
   "name": "nav-ally",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An automation tool for testing frontend applications against a set of web accessibility guidelines.",
   "main": "bin/validator.js",
   "scripts": {
