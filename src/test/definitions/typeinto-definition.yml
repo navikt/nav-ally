@@ -7,3 +7,5 @@ links:
             into: "#site-search-input"
             text: "Pensjon"
             key: "enter"
+        - waitFor: '.sokeresultatContainer'
+        - pause: 1000

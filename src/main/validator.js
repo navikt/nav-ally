@@ -680,7 +680,7 @@ Validator.prototype.__typeAndPress = function(
   const self = this;
   return this.__type(browser, cssTypeInto, textToType)
     .then(function() {
-      return this.__keyboard(browser, key, [], cssTypeInto);
+      return self.__keyboard(browser, key, [], cssTypeInto);
     })
     .catch(function(err) {
       self.__exit(1, {
