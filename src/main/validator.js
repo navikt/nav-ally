@@ -811,9 +811,10 @@ Validator.prototype.__keytype = function(key, keyCombo) {
 };
 
 Validator.prototype.__keyCombo = function(keyCombo) {
+  const self = this;
   let chord = [];
   const keyArr = keyCombo.split(',');
-  keyArr.forEach(key => chord.push(this.__keytype(key, undefined)));
+  keyArr.forEach(key => chord.push(self.__keytype(key, undefined)));
   return SeleniumWebDriver.Key.chord(keyCombo);
 };
 
