@@ -7,14 +7,12 @@
 - [Definition file](#definition_file)
     - [Simple example](#simple_example)
     - [Overriding global settings with link options](#overriding_options)
-    - [Pre-validation tasks with the validation DSL](#validation_dsl)
+    - [Pre-validation commands/actions with the validation DSL](#validation_dsl)
         - [Waiting for something to load](#waitFor)
         - [Select an option from a dropdown box](#selectOption)
         - [Write text into an element](#type)
         - [Click an element](#clickOn)
-        - [Click an element and wait for another element](#clickAndWait)
-        - [Advanced example - executing multiple commands with chaining](#advanced_example)
-        - [Advanced example - select an option from a dropdown box](#advanced_example_dropdown)
+        - [Pause the execution](#pause)
 
 ## <a id="using_in_project"> Using NAV-Ally in your project
 
@@ -67,13 +65,13 @@ The definition file consist of a list of URL's and optional commands that you ca
 ### <a id="simple_example"> Simple examples
 This is the simplest form of a definition file. It consists only of an array of links. 
 
-Yaml - see [simple-definition.yml](src/test/definitions/alphagov.yml):
+Yaml - see [alphagov.yml](src/test/definitions/alphagov.yml):
 ```yaml
     links:
       - link: 'https://alphagov.github.io/accessibility-tool-audit/test-cases.html'
 ```
 
-Javascript - see [simple-definition.js](src/test/definitions/alphagov.js):
+Javascript - see [alphagov.js](src/test/definitions/alphagov.js):
 ```javascript
     exports.links = [
         {link: 'https://alphagov.github.io/accessibility-tool-audit/test-cases.html'}
@@ -141,7 +139,6 @@ specified under the `commands` list in the given order and then finally validati
 |------|-----|-------|-----------|
 |[waitFor](#waitFor)|String||A CSS-selector that tell which element to wait for.|
 |[clickOn](#clickOn)|String||A CSS-selector that tells which element to click on.|
-|[clickAndWait](#clickAndWait)|Object|clickOn, waitFor|To make the config more readable, waitFor can also be renamed _thenWaitFor_|
 |[pause](#pause)|Integer||Number of millis to pause the execution while running commands. Useful f.ex. then you need to wait for CSS-animations to finish.|
 |[type](#type)|Object|into, text, key (optional)|Enter text into an element. `into`: CSS-selector, `text`: the value to type in. `key` can be one of the stateless keys on the keyboard: `enter`, `tab`, `esc`, `backspace`, `delete`.|
 |[selectOption](#selectOption)|Object|from, option|Select an option from an dropdown element.|
@@ -240,7 +237,7 @@ Javascript:
 You can also specify an optional control key that will be pressed on the keyboard. You can do this by adding the extra `key` option. The value of the key should be 
 any of the stateless keys on the keyboard: `enter`, `tab`, `esc`, `backspace`, `delete`.
 
-Yaml - see [typeinto-definition.yml](src/test/definitions/typeinto-definition.yml):
+Yaml - see [typeinto.yml](src/test/definitions/typeinto.yml):
 ````yaml
 links:
   - link: "http://www.nav.no"
@@ -280,37 +277,7 @@ Javascript
     ];
 ```
 
-#### <a id="clickAndWait"> **clickAndWait** - Click an element and then wait for another element
-In this example we click on the element `#menuItem + label` and then wait for the element `.result-table` to be visible. 
-The validation of the page is then executed. If the element `.result-table` does not exist, an error is thrown and the 
-validator exists with status code 1. The values of `clickAndWait.clickOn` `clickAndWait.thenWaitFor` is a fully qualified CSS selectors.
-
-Yaml:
-```yaml
-    links:
-      - link: 'http://localhost:3000/lorem/ipsum'
-        options:
-          commands:
-            - clickAndWait:
-                clickOn: '#menuItem + label'
-                thenWaitFor: '.result-table'
-```
-
-Javascript
-```javascript
-    exports.links = [
-        {
-            link: 'http://localhost:3000/lorem/ipsum', 
-            options: { 
-                commands: [
-                    { clickAndWait: { clickOn: '#menuItem + label', thenWaitFor: '.result-table' } }
-                ]
-            }
-        }
-    ];
-```
-
-#### <a id="pause"> **pause** - Pause the execution 
+#### <a id="pause"> **pause** - Pause the execution  
 In this example we click on the element `#btnNextPage` and then pause the execution for 3 seconds to give the browser some time to load data or finish the execution of f.ex. animations on the page.
 The value of `pause` is a millis integer.
 
@@ -333,92 +300,6 @@ Javascript
                 commands: [
                     { clickOn: '#btnNextPage' },
                     { pause: 3000 }
-                ]
-            }
-        }
-    ];
-```
-
-
-### <a id="advanced_example"> Advanced example - executing multiple commands with chaining
-This example shows how to run several commands synchronized. The example defines links to two web sites that will be validated. For the first link in this example, we tell Selenium to:
-
-1. go to the link http://localhost:3000/lorem/ipsum
-2. then wait for the element named `.lorem-page` to become visible
-3. then wait for `.ipsum-content` to become visible
-4. then click on the element identified by the `#menuItem + label` (ie. a custom radio button)
-5. then wait for the `.result-table` element to become visible.
-6. and then run the validation on page
-7. go to the second link http://localhost:3000/dolor/sit/amet
-8. and then run the validation on the next page (no options are defined so validation is run directly).
-
-Yaml:
-```yaml
-    links:
-      - link: 'http://localhost:3000/lorem/ipsum'
-        options:
-          commands:
-            - waitFor: '.lorem-page'
-            - waitFor: '.ipsum-content'
-            - clickAndWait:
-                 clickOn: '#menuItem + label'
-                 thenWaitFor: '.result-table'
-      - link: 'http://localhost:3000/dolor/sit/amet'
-```
-
-Javascript
-```javascript
-    exports.links = [
-        {
-            link: 'http://localhost:3000/lorem/ipsum',
-            options: {
-                commands: [
-                    { waitFor: '.lorem-page' },
-                    { waitFor: '.ipsum-content' },
-                    { clickAndWait: {clickOn: '#menuItem + label', thenWaitFor: '.result-table' } }
-                ]
-            }
-        },
-        { link: 'http://localhost:3000/dolor/sit/amet' }
-    ];
-```
-
-The values of `waitFor` and `clickAndWait` options is a fully qualified CSS selector.  `clickAndWait` is a command that can be 
-used to click/select radios, checkboxes and buttons and then wait for another element with the `thenWaitFor` option.
-
-### <a id="advanced_example_dropdown"> Advanced example - select an option from a dropdown box
-This example shows how to combine several commands together. The example defines two links that will be validated. For the first link in this example, we tell Selenium to:
-
-1. go to the link
-2. then wait for the element named `#header` to become visible
-3. then select the option `Lorem Ipsum` from the dropdown box `#header select`
-4. then wait for the element named `.lorem-element` to become visible
-5. and finally run the validation
-
-Yaml:
-```yaml
-    links:
-      - link: 'http://localhost:3000/lorem/ipsum'
-        options:
-          commands:
-            - waitFor: '#header'
-            - selectOption:
-                from: '#header select'
-                option: 'Lorem Ipsum'
-            - waitFor: '.lorem-element'
-      - link: 'http://localhost:3000/dolor/sit/amet'
-```
-
-Javascript:
-```javascript
-    exports.links = [
-        {
-            link: 'http://localhost:3000/lorem/ipsum',
-            options: {
-                commands: [
-                    { waitFor: '#header' },
-                    { selectOption: { from: '#header select', option: 'Lorem Ipsum' } },
-                    { waitFor: '.lorem-element' }
                 ]
             }
         }
