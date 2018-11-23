@@ -723,7 +723,7 @@ Validator.prototype.__typeAndPress = function(
   const self = this;
   return this.__type(browser, cssTypeInto, textToType)
     .then(function() {
-      return this.__keyboard(browser, key, [], cssTypeInto);
+      return self.__keyboard(browser, key, [], cssTypeInto);
     })
     .catch(function(err) {
       self.__exit(1, {
@@ -854,9 +854,10 @@ Validator.prototype.__keytype = function(key, keyCombo) {
 };
 
 Validator.prototype.__keyCombo = function(keyCombo) {
+  const self = this;
   let chord = [];
   const keyArr = keyCombo.split(',');
-  keyArr.forEach(key => chord.push(this.__keytype(key, undefined)));
+  keyArr.forEach(key => chord.push(self.__keytype(key, undefined)));
   return SeleniumWebDriver.Key.chord(keyCombo);
 };
 

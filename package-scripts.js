@@ -24,12 +24,12 @@ module.exports = {
     docs: {
       default: {
         script:
-          'nps docs.prebuild && bundle exec jekyll build --source ./docs --destination ./docs/_site --config ./docs/_config.yml --safe --drafts',
+          'nps docs.prebuild && nps docs.api',
         description: 'Build documentation'
       },
       prebuild: {
         script:
-          'rimraf docs/_site docs/api && nps docs.api',
+          'rimraf docs/_site docs/api',
         description: 'Prepare system for doc building',
         hiddenFromHelp: true
       },
