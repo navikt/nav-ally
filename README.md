@@ -44,7 +44,6 @@ See [this example application](https://github.com/dervism/carparkjs) for a compl
 ## Documentation
 
 [Documentation and code examples](documentation.md)  
-[Guide](https://navikt.github.io/nav-ally/api)
 
 ## Contact
 

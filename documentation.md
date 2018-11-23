@@ -1,5 +1,4 @@
 ## Documentation
-- [Quick start](#quick_start)
 - [Using NAV-Ally in your project](#using_in_project)
 - [Global configuration](#configuration)
     - [Validation rules](#validation_rules)
@@ -17,6 +16,8 @@
 ## <a id="using_in_project"> Using NAV-Ally in your project
 
 Clone the repo: `git clone https://github.com/navikt/nav-ally.git` or download a copy from https://github.com/navikt/nav-ally
+
+[API documentation](https://navikt.github.io/nav-ally/api)
 
 Summary:
 1. Create a definition file using the validation DSL (see below)
@@ -49,7 +50,7 @@ cat.semantics,cat.sensory-and-visual-cues,cat.parsing,cat.structure,cat.name-rol
 
 https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md 
 
-### <a id="test_execution_and_assertation"> Test execution and assertation
+### <a id="test_execution_and_assertation"> Test execution and assertion
 |Name|Type|Default Value|Required|Description|
 |----|----|-------------|--------|-----------|
 |NAME|`string`|UU Test|No|The test execution title|
@@ -128,7 +129,7 @@ The same example written in Javascript:
 ```
 
   
-### <a id="validation_dsl"> Preforming actions before validation
+### <a id="validation_dsl"> Preforming commands/actions before validation
 These examples shows how to define options to customize the behaviour of the test execution. The options are tasks that 
 are run by Selenium before the validation is executed using Axe. The way this works is by first loading the specified link, then executing any tasks 
 specified under the `commands` list in the given order and then finally validating the resulting web page.    
