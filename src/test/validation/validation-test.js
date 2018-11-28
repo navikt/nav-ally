@@ -6,7 +6,7 @@ let runner = require('../../main/runners/mocha/MochaRunner');
 // set options
 process.env.HEADLESS = true;
 process.env.ASSERT_WARNINGS = true;
-process.env.DETAILED_REPORT = false;
+process.env.DETAILED_REPORT = true;
 
 let testSuite = [
   'ok-tests/select-option-test',
