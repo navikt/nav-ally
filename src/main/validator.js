@@ -9,8 +9,10 @@ const AxeBuilder = require('axe-webdriverjs');
 const chromedriver = require('chromedriver');
 process.env.chromedriver = chromedriver.path;
 
-const geckodriver = require('geckodriver');
-process.env.geckodriver = geckodriver.path;
+if (module_exists('geckodriver')) {
+    const geckodriver = require('geckodriver');
+    process.env.geckodriver = geckodriver.path;
+}
 
 const Until = SeleniumWebDriver.until;
 
@@ -279,6 +281,13 @@ Validator.prototype.createChrome = function(headless) {
  * @returns {!ThenableWebDriver}
  */
 Validator.prototype.createFirefox = function(headless) {
+
+  // Need Firefox WebDriver in order to create the browser.
+  if (!process.env.geckodriver || !module_exists('geckodriver')) {
+    this.__exit(1, {msg: 'GeckoDriver for Firefox is not installed.'
+            + 'Install it using the command: npm install --save geckodriver.'});
+  }
+
   let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
   const options = new Firefox.Options();
   if (headless) {
@@ -853,6 +862,12 @@ function printDebugInfo() {
   log('ASSERT_WARNINGS = ' + ASSERT_WARNINGS);
   log('TAGS = ' + TAGS);
   log('\n');
+}
+
+
+function module_exists( name ) {
+    try { return require.resolve( name ) }
+    catch( e ) { return false }
 }
 
 process.on('unhandledRejection', err => {
