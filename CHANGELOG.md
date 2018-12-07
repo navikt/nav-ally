@@ -15,6 +15,7 @@ Also added a Dockerfile and added an initial support to allow the use of "maximu
 
 - Firefox driver is no longer automatically downloaded. The validator will automatically load the drivers 
 when it is installed in your own project.
+- Added support for loading test suites used to test the validator itself.
 
 # 1.0.3 / 2018-11-20
 

@@ -39,7 +39,9 @@ The tool can be a part of a build pipeline, but can also be used standalone to t
 
 See [this example application](https://github.com/dervism/carparkjs) for a complete NodeJS/Express application that uses the validator. The example application starts a local instance of the application before running the validation.
 
-<br />
+## Docker image
+
+[Documentation and code examples](docker/README.md)  
 
 ## Documentation
 
