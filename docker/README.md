@@ -11,7 +11,7 @@ myApp
   - src
     -- app
     -- test
-        -- uutest.yml
+        -- wcagtest.yml
   - bin
   - package.json
 ```
@@ -19,7 +19,7 @@ myApp
 Then the following command run the validation from the `myApp` folder:
 
 ```
-$ docker run -v "$(pwd)"/src/test:/nav-ally/uu navikt/nav-ally -f ./nav-ally/uu/uutest.yml
+$ docker run -v "$(pwd)"/src/test:/nav-ally/uu navikt/nav-ally -f ./nav-ally/uu/wcagtest.yml
 ```
 
 ## Build a new Docker image
@@ -32,7 +32,7 @@ $ sh build.sh navikt/nav-ally
 If you want to run a test with the new image, then just add the filename also:
 
 ```
-$ sh build.sh navikt/nav-ally test.yml
+$ sh build.sh navikt/nav-ally wcagtest.yml
 ```
 
 ## Integration with Jenkins
@@ -63,7 +63,7 @@ stage("WCAG-test") {
       println(cmd)
       sh(cmd)
   } catch (Exception e) {
-      notifyOnError("UU-test feilet.")
+      notifyOnError("UU-test failed.")
       throw e
   }
 }
