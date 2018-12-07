@@ -1,3 +1,21 @@
+# 1.1.0 / 2018-12-07
+
+## :tada: Enhancements
+
+- Complete rewrite of the MochaRunner. It now allows to run validation with a definition given as a method parameter. 
+Also added a Dockerfile and added an initial support to allow the use of "maximum number of fails" assertion.
+
+## :bug: Fixes
+
+- Fixed a bug that counted incorrect number of warnings.
+
+## :book: Documentation
+
+## :nut_and_bolt: Other
+
+- Firefox driver is no longer automatically downloaded. The validator will automatically load the drivers 
+when it is installed in your own project.
+
 # 1.0.3 / 2018-11-20
 
 ## :tada: Enhancements
