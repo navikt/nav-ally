@@ -1,4 +1,6 @@
 links:
-  - link: "http://localhost:7777/heading-order-test"
+  - link: "http://localhost:7777/fail-tests/heading-order-test"
     options:
       tags: "best-practice"
+      test:
+        expect: "fail"

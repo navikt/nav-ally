@@ -1,17 +1,26 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-let runner = require('../../main/runners/mocha/MochaRunner');
+const MochaRunner = require('../../main/runners/mocha/MochaRunner');
+const runner = new MochaRunner();
+const ProcessHandler = require('../../main/processes/ProcessHandler');
 
 // set options
-process.env.HEADLESS = true;
-process.env.ASSERT_WARNINGS = true;
-process.env.DETAILED_REPORT = true;
+let name = "UU Tests";
+const headless = true;
+const warnings = true;
+const detailedReport = false;
 
-let testSuite = [
+let okTestSuite = [
   'ok-tests/select-option-test',
   'ok-tests/heading-order-test',
   'ok-tests/skip-link-test'
+];
+
+let failingTestSuite = [
+  'fail-tests/select-option-test',
+  'fail-tests/heading-order-test',
+  'fail-tests/skip-link-test'
 ];
 
 /**
@@ -36,9 +45,16 @@ function runTestSuite(testSites) {
     yamls.links.push(...yamlObj.links);
   });
 
-  // set the correct env file to load it with the validator
-  process.env.YAML_DEFINITION = yaml.safeDump(yamls);
-  runner.runValidator();
+  name += name.includes("fail") ? "that must fail." : "that must pass.";
+
+  return runner.run(yamls, {name, headless, warnings, detailedReport});
 }
 
-runTestSuite(testSuite);
+async function runTests() {
+    const fails = await runTestSuite(failingTestSuite);
+    const oks = await runTestSuite(okTestSuite);
+
+    new ProcessHandler().assert(fails.fails + oks.fails, fails.passes + oks.passes);
+}
+
+runTests();

@@ -2,3 +2,5 @@ links:
   - link: "http://localhost:7777/fail-tests/skip-link-test"
     options:
       tags: "best-practice"
+      test:
+        expect: "fail"

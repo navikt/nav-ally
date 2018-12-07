@@ -4,8 +4,8 @@ const program = require('commander');
 const path = require('path');
 const fs = require('fs');
 const exists = fs.existsSync || path.existsSync;
-let Validator = require('../src/main/runners/mocha/MochaRunner');
 const cwd = process.cwd();
+const ProcessHandler = require('../src/main/processes/ProcessHandler');
 
 program._name = 'nav-ally';
 
@@ -96,8 +96,6 @@ yesOrNo(
   'ASSERT_WARNINGS'
 );
 
-Validator.runValidator();
-
 function yesOrNo(flag, msg, altMsg, errorMsg, envParam) {
   if (!flag) {
     console.log(altMsg);
@@ -115,3 +113,12 @@ function yesOrNo(flag, msg, altMsg, errorMsg, envParam) {
     }
   }
 }
+
+async function run() {
+  const MochaRunner = require('../src/main/runners/mocha/MochaRunner');
+  const runner = new MochaRunner();
+  const results = await runner.run();
+  new ProcessHandler().assert(results.fails, results.passes);
+}
+
+run();

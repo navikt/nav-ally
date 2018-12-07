@@ -43,7 +43,7 @@ function print(violations, url, type, detailedReport) {
       ? console.log(
           'There are ' + statCount + ' ' + typeCaptions + ' on URL: ' + url
         )
-      : console.log('There is one ' + typeCaption + ' type on URL: ' + url);
+      : console.log('There is one ' + typeCaption + ' on URL: ' + url);
     printEmptyLine();
 
     for (let i = 0; i < violationCount; i += 1) {

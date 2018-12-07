@@ -9,9 +9,9 @@ const AxeBuilder = require('axe-webdriverjs');
 const chromedriver = require('chromedriver');
 process.env.chromedriver = chromedriver.path;
 
-if (module_exists('geckodriver')) {
-    const geckodriver = require('geckodriver');
-    process.env.geckodriver = geckodriver.path;
+if (moduleExists('geckodriver')) {
+  const geckodriver = require('geckodriver');
+  process.env.geckodriver = geckodriver.path;
 }
 
 const Until = SeleniumWebDriver.until;
@@ -33,13 +33,16 @@ const {
   HEADLESS,
   BROWSER,
   DETAILED_REPORT,
-  DEFINITION_FILE,
-  YAML_DEFINITION
+  DEFINITION_FILE
 } = require('./globals/index');
 
 const defaultConfig = {
   defaultBrowser: BROWSER,
   headless: inputLoader.getBooleanValue(HEADLESS, 'HEADLESS'),
+  detailedReport: inputLoader.getBooleanValue(
+    DETAILED_REPORT,
+    'DETAILED_REPORT'
+  ),
   timeout: TIMEOUT,
   waitTimeout: WAIT_TIMEOUT,
   tags: TAGS.split(',')
@@ -67,10 +70,10 @@ SeleniumWebDriver.promise.USE_PROMISE_MANAGER = false;
  */
 function Validator(inputFile, userConfig) {
   this.inputFile =
-    inputFile ||
-    inputLoader.loadInputFromEnvironment(DEFINITION_FILE, YAML_DEFINITION);
+    inputFile || inputLoader.loadInputFromEnvironment(DEFINITION_FILE);
 
   const config = userConfig ? {...defaultConfig, ...userConfig} : defaultConfig;
+  this.config = config;
 
   this.defaultBrowserName = config.defaultBrowser.toLowerCase();
   this.headlessBrowser = config.headless;
@@ -108,7 +111,7 @@ Validator.prototype.run = function(printToConsole = true) {
     })
     .then(() => {
       if (printToConsole) {
-        self.printReportToConsole();
+        self.printReportToConsole(self.config.detailedReport);
         console.timeEnd('validation execution time');
         log('\n');
       }
@@ -199,7 +202,12 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
       .disableRules(disabledRules)
       .analyze()
       .then(pageResults => {
-        results.push({link: page.link, desc: page.desc, result: pageResults});
+        results.push({
+          link: page.link,
+          desc: page.desc,
+          options,
+          result: pageResults
+        });
         self.__foreachAsync(pages, index + 1, resolve);
       })
       .catch(err => {
@@ -281,11 +289,13 @@ Validator.prototype.createChrome = function(headless) {
  * @returns {!ThenableWebDriver}
  */
 Validator.prototype.createFirefox = function(headless) {
-
   // Need Firefox WebDriver in order to create the browser.
-  if (!process.env.geckodriver || !module_exists('geckodriver')) {
-    this.__exit(1, {msg: 'GeckoDriver for Firefox is not installed.'
-            + 'Install it using the command: npm install --save geckodriver.'});
+  if (!process.env.geckodriver || !moduleExists('geckodriver')) {
+    this.__exit(1, {
+      msg:
+        'GeckoDriver for Firefox is not installed.' +
+        'Install it using the command: npm install --save geckodriver.'
+    });
   }
 
   let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
@@ -355,14 +365,6 @@ Validator.prototype.getWarnings = function() {
   return this.__countAllInCompleteOccurrences(this.results);
 };
 
-Validator.prototype.hasValidationErrors = function() {
-  return this.__countAllViolationOccurrences(this.results) > 0;
-};
-
-Validator.prototype.hasWarnings = function() {
-  return this.__countAllInCompleteOccurrences(this.results) > 0;
-};
-
 /**
  * Count the number of violations on a given page.
  * @param page A link that were tested by the validator.
@@ -402,12 +404,7 @@ Validator.prototype.getWarningsOnPage = function(page) {
  *
  * @param detailedReport Set to true to print out a detailed report about the errors.
  */
-Validator.prototype.printReportToConsole = function(
-  detailedReport = inputLoader.getBooleanValue(
-    DETAILED_REPORT,
-    'DETAILED_REPORT'
-  )
-) {
+Validator.prototype.printReportToConsole = function(detailedReport) {
   this.results.forEach(function(page) {
     log('\n\n');
     log('Page: ' + (page.desc || page.link));
@@ -440,7 +437,7 @@ Validator.prototype.__countViolationOccurrences = function(violations) {
 
 /**
  * Count the total number of issues found on all pages.
- * @param violations Axe result object
+ * @param results Axe result object
  * @returns {number} Number of issues found.
  */
 Validator.prototype.__countAllViolationOccurrences = function(results) {
@@ -462,7 +459,7 @@ Validator.prototype.__countAllViolationOccurrences = function(results) {
 Validator.prototype.__countAllInCompleteOccurrences = function(results) {
   let incompleteFailes = 0;
   results.forEach(function(page) {
-    if (page.result.violations.length > 0)
+    if (page.result.incomplete.length > 0)
       incompleteFailes += this.__countViolationOccurrences(
         page.result.incomplete
       );
@@ -520,7 +517,15 @@ Validator.prototype.__commandChaining = function(
  */
 Validator.prototype.__commandSelector = function(browser, chainElement) {
   if (chainElement.hasOwnProperty('waitFor')) {
-    return this.__waitFor(browser, chainElement['waitFor']);
+    if (typeof chainElement['waitFor'] === 'object') {
+      return this.__waitFor(
+        browser,
+        chainElement['waitFor'].element,
+        chainElement['waitFor'].timeout || this.waitTimeout
+      );
+    } else {
+      return this.__waitFor(browser, chainElement['waitFor'], this.waitTimeout);
+    }
   }
   if (chainElement.hasOwnProperty('clickOn')) {
     return this.__clickOn(browser, chainElement['clickOn']);
@@ -528,13 +533,19 @@ Validator.prototype.__commandSelector = function(browser, chainElement) {
   if (chainElement.hasOwnProperty('pause')) {
     return this.__pause(browser, chainElement['pause']);
   }
-  if (chainElement.hasOwnProperty('clickAndWait')) {
-    return this.__clickAndWait(
-      browser,
-      chainElement['clickAndWait'].clickOn,
-      chainElement['clickAndWait'].waitFor ||
-        chainElement['clickAndWait'].thenWaitFor
-    );
+  if (chainElement.hasOwnProperty('sleep')) {
+    return this.__sleep(browser, chainElement['sleep']);
+  }
+  if (chainElement.hasOwnProperty('find')) {
+    if (typeof chainElement['find'] === 'object') {
+      return this.__find(
+        browser,
+        chainElement['find'].type,
+        chainElement['find'].element
+      );
+    } else {
+      return this.__find(browser, 'css', chainElement['find']);
+    }
   }
   if (chainElement.hasOwnProperty('selectOption')) {
     return this.__selectOption(
@@ -704,49 +715,65 @@ Validator.prototype.__typeAndPress = function(
     });
 };
 
-Validator.prototype.__clickAndWait = function(browser, cssClickOn, cssWaitFor) {
+/**
+ * Find the first visible element using a given selector.
+ *
+ * @param browser A SeleniumWebDriver browser
+ * @param type Type of selector. One of css, xpath, name, classname, id or linktext.
+ * @param selector The selector to use, depending on the given type.
+ * @returns {*|Promise<T | never>} Returns a promise that resolves either true or false.
+ * @private
+ */
+Validator.prototype.__find = function(browser, type, selector) {
   const self = this;
+  let locator = {};
+
+  if (type.toLowerCase() === 'xpath') locator = By.xpath(selector);
+  else if (type.toLowerCase() === 'linktext') locator = By.linkText(selector);
+  else if (type.toLowerCase() === 'name') locator = By.name(selector);
+  else if (type.toLowerCase() === 'classname') locator = By.className(selector);
+  else if (type.toLowerCase() === 'id') locator = By.id(selector);
+  else locator = By.css(selector);
+
   return browser
-    .findElement(By.css(cssClickOn))
-    .then(function(element) {
-      return element.click();
-    })
-    .then(function() {
-      return self.__waitFor(browser, cssWaitFor);
+    .findElement(locator)
+    .then(element => {
+      return element.isDisplayed();
     })
     .catch(function(err) {
       self.__exit(1, {
-        msg: 'An error occurred when trying to click on [' + cssClickOn + '].',
+        msg:
+          'An error occurred when trying to find element [' + selector + '].',
         err
       });
     });
 };
 
-Validator.prototype.__waitFor = function(browser, css) {
+Validator.prototype.__waitFor = function(browser, cssString, timeout) {
   const self = this;
   return browser
-    .wait(Until.elementsLocated(By.css(css)), self.waitTimeout)
+    .wait(Until.elementsLocated(By.css(cssString)), timeout)
     .catch(function(err) {
       self.__exit(1, {
         msg:
           'An error occurred while waiting for css element [' +
-          css +
+          cssString +
           ']. Make sure the element exist.',
         err
       });
     });
 };
 
-Validator.prototype.__clickOn = function(browser, cssClickOn) {
+Validator.prototype.__clickOn = function(browser, cssString) {
   const self = this;
   return browser
-    .findElement(By.css(cssClickOn))
+    .findElement(By.css(cssString))
     .then(function(element) {
       return element.click();
     })
     .catch(function(err) {
       self.__exit(1, {
-        msg: 'An error occurred when trying to click on [' + cssClickOn + '].',
+        msg: 'An error occurred when trying to click on [' + cssString + '].',
         err
       });
     });
@@ -771,6 +798,10 @@ Validator.prototype.__pause = function(browser, time) {
   const stop = new Date().getTime() + time;
   while (new Date().getTime() < stop) {}
   return Promise.resolve(true);
+};
+
+Validator.prototype.__sleep = function(browser, time) {
+  return browser.sleep(time);
 };
 
 Validator.prototype.__keyboard = function(
@@ -864,10 +895,12 @@ function printDebugInfo() {
   log('\n');
 }
 
-
-function module_exists( name ) {
-    try { return require.resolve( name ) }
-    catch( e ) { return false }
+function moduleExists(name) {
+  try {
+    return require.resolve(name);
+  } catch (e) {
+    return false;
+  }
 }
 
 process.on('unhandledRejection', err => {

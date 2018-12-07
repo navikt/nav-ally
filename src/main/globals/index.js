@@ -74,13 +74,6 @@ const TAGS =
     'cat.sensory-and-visual-cues,cat.parsing,cat.structure,cat.name-role-value,cat.keyboard,cat.forms,cat.language';
 
 /**
- * Can be set to a Yaml-object that the validator will run.
- * @type {yaml}
- * @constant
- */
-const YAML_DEFINITION = process.env.YAML_DEFINITION || undefined;
-
-/**
  * Indicates the path to the binary executable for Chrome.
  * Often required when running in a Docker container.
  * @type {string}
@@ -107,7 +100,6 @@ module.exports = {
   DETAILED_REPORT,
   ASSERT_WARNINGS,
   TAGS,
-  YAML_DEFINITION,
   CHROME_BINARY,
   FIREFOX_BINARY
 };

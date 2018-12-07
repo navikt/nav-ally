@@ -13,21 +13,11 @@ function InputLoader() {} /* eslint-disable-line no-unused-vars */
  *
  * @memberOf InputLoader
  * @param definitionFile Loads config from an external definition file.
- * @param yamlFile Loads config from a yaml object.
  * @returns {*}
  */
-function loadInputFromEnvironment(definitionFile, yamlFile) {
+function loadInputFromEnvironment(definitionFile) {
   if (definitionFile) {
     return handleInputFromDefinitionFile(definitionFile);
-  }
-
-  if (yamlFile) {
-    if (typeof yamlFile === 'string') {
-      return handleInputFromYaml(yamlFile);
-    } else {
-      trace('\nExpected yaml input to be string.\n', yamlFile);
-      process.exit(1);
-    }
   }
 
   error('\nNo input has been configured.');
@@ -38,7 +28,7 @@ function loadInputFromEnvironment(definitionFile, yamlFile) {
 }
 
 function handleInputFromYaml(yamlFile) {
-  log('Loading yaml definition.');
+  log('Loading yaml definition:');
   const yamlObj = preProcessYaml(yaml.safeLoad(yamlFile));
   log('YAML object loaded:', yamlObj);
   return yamlObj;
