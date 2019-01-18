@@ -6,8 +6,8 @@ const Firefox = require('selenium-webdriver/firefox');
 
 const AxeBuilder = require('axe-webdriverjs');
 
-//const chromedriver = require('chromedriver');
-//process.env.chromedriver = chromedriver.path;
+const chromedriver = require('chromedriver');
+process.env.chromedriver = chromedriver.path;
 
 if (moduleExists('geckodriver')) {
   const geckodriver = require('geckodriver');
