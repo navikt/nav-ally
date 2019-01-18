@@ -612,12 +612,9 @@ Validator.prototype.__authenticate = async function(
   authOptions,
   pageLink
 ) {
-  const authFolder = path.dirname(path.resolve(authOptions.handlerDir));
-
   if (authOptions.handler) {
-    const handlerPath = path.resolve(authFolder, authOptions.handler);
+    const handlerPath = path.resolve(authOptions.handler);
 
-    log('Definition file directory: ' + this.definitionFileDir);
     log('Resolved authentication handler path: ' + handlerPath);
 
     const handler = require(handlerPath);
