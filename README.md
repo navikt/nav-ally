@@ -4,7 +4,6 @@
 ![](https://img.shields.io/npm/dw/nav-ally.svg?label=npm-downloads)
 ![](https://img.shields.io/npm/v/nav-ally.svg?label=npm-version)
 ![](https://img.shields.io/npm/l/nav-ally.svg)
-![](https://img.shields.io/snyk/vulnerabilities/npm/nav-ally.svg)
 
 ## What is this
 
