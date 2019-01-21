@@ -6,8 +6,8 @@ const Firefox = require('selenium-webdriver/firefox');
 
 const AxeBuilder = require('axe-webdriverjs');
 
-const chromedriver = require('chromedriver');
-process.env.chromedriver = chromedriver.path;
+//const chromedriver = require('chromedriver');
+//process.env.chromedriver = chromedriver.path;
 
 if (moduleExists('geckodriver')) {
   const geckodriver = require('geckodriver');
@@ -24,8 +24,8 @@ const inputLoader = require('./inputs/InputLoader');
 
 const {
   DEBUG,
-  CHROME_BINARY,
-  FIREFOX_BINARY,
+  CHROME_BIN,
+  FIREFOX_BIN,
   TAGS,
   TIMEOUT,
   ASSERT_WARNINGS,
@@ -270,13 +270,18 @@ Validator.prototype.createChrome = function(headless) {
   let builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
   const options = new Chrome.Options();
   if (headless) {
-    if (CHROME_BINARY && CHROME_BINARY !== undefined) {
-      options.setChromeBinaryPath(CHROME_BINARY);
-      log('Chrome running with binary: ' + CHROME_BINARY);
+    if (CHROME_BIN && CHROME_BIN !== undefined) {
+      options.setChromeBinaryPath(CHROME_BIN);
+      log('Chrome running with binary: ' + CHROME_BIN);
     }
     options.headless();
   }
-  options.addArguments(['no-sandbox', 'allow-running-insecure-content']);
+  options.addArguments([
+    'no-sandbox',
+    'allow-running-insecure-content',
+    'disable-dev-shm-usage',
+    'disable-software-rasterizer'
+  ]);
   options.setAcceptInsecureCerts(true);
   builder.withCapabilities(options);
   return builder.build();
@@ -301,9 +306,9 @@ Validator.prototype.createFirefox = function(headless) {
   let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
   const options = new Firefox.Options();
   if (headless) {
-    if (FIREFOX_BINARY && FIREFOX_BINARY !== undefined) {
-      options.setBinary(FIREFOX_BINARY);
-      log('Firefox running with binary: ' + FIREFOX_BINARY);
+    if (FIREFOX_BIN && FIREFOX_BIN !== undefined) {
+      options.setBinary(FIREFOX_BIN);
+      log('Firefox running with binary: ' + FIREFOX_BIN);
     }
     options.headless();
   }

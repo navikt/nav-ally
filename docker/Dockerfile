@@ -6,6 +6,7 @@ RUN apk update && apk upgrade \
     && echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
     && apk add --no-cache \
     chromium@edge \
+    harfbuzz@edge \
     nss@edge \
     chromium-chromedriver \
     make gcc g++ python git bash nodejs nodejs-npm \
@@ -14,23 +15,18 @@ RUN apk update && apk upgrade \
     /usr/share/man \
     /tmp/*
 
-ENV CHROME_BIN=/usr/bin/chromium-browser \
-    CHROME_PATH=/usr/lib/chromium/
-
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_PATH=/usr/lib/chromium/
+ENV chromedriver /usr/bin/chromedriver
 ENV webdriver.chrome.driver /usr/bin/chromedriver
 ENV PATH $webdriver.chrome.driver:$PATH
-ENV CHROME_BINARY $CHROME_BIN
-RUN chmod +x /usr/bin/chromedriver
 
 # Validator app
 COPY run.sh /
 RUN git clone https://github.com/navikt/nav-ally && \
     mv run.sh nav-ally/ && \
     chmod +x /nav-ally/run.sh && \
-    cd nav-ally && npm install && \
-    rm ./node_modules/chromedriver/lib/chromedriver/chromedriver && \
-    cp /usr/bin/chromedriver ./node_modules/chromedriver/lib/chromedriver/chromedriver && \
-    chmod +x ./node_modules/chromedriver/lib/chromedriver/chromedriver
+    cd nav-ally && npm install
 WORKDIR /nav-ally
 ENTRYPOINT ["/nav-ally/run.sh"]
 CMD []
