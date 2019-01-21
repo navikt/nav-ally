@@ -1,3 +1,10 @@
+# 1.2.1 / 2019-01-21
+
+## :tada: Enhancements
+
+- Updated the [Docker image](docker/Dockerfile) so it uses chromium-chromedriver from Alpine repos instead of chromedriver.js from NPM.
+
+
 # 1.1.0 / 2018-12-07
 
 ## :tada: Enhancements
@@ -8,8 +15,6 @@ Also added a Dockerfile and added an initial support to allow the use of "maximu
 ## :bug: Fixes
 
 - Fixed a bug that counted incorrect number of warnings.
-
-## :book: Documentation
 
 ## :nut_and_bolt: Other
 
@@ -22,8 +27,6 @@ when it is installed in your own project.
 ## :tada: Enhancements
 
 - NAV-Ally is published to npmjs. You can now test any project by just installing the module to your project.
-
-## :bug: Fixes
 
 ## :book: Documentation
 

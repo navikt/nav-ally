@@ -13,33 +13,54 @@
         - [Click an element](#clickOn)
         - [Pause the execution](#pause)
 
+
 ## <a id="using_in_project"> Using NAV-Ally in your project
 
-Clone the repo: `git clone https://github.com/navikt/nav-ally.git` or download a copy from https://github.com/navikt/nav-ally
+### As a module in your existing project:
 
-[API documentation](https://navikt.github.io/nav-ally/api)
+1. Add the module to your project
 
-Summary:
-1. Create a definition file using the validation DSL (see below)
-2. Set the DEFINITION_FILE environment variable to point to the file you created
-3. Set any optional configuration environment variables (see configuration options below)
-4. Run the `npm start` command.
-5. Node will fail with a none-zero value when there is test errors.
+    `npm install --save-dev nav-ally`
+
+2. Create a Yaml-based definition file and add it anywhere in your project (preferably on the root folder):
+
+    Paste in the following example content in a file called wcag.yml:
+    
+    ```yaml
+    links:
+     - "http://google.com"
+    ```
+
+3. Create a run script in your package.json (assuming the exists in the root folder):
+
+    "wcag-test":"nav-ally -f wcag.yml"
+
+4. You can now run the validator:
+
+    `$ npm run wcag-test`
+
+### Running NAV-Ally standalone
+
+1. Clone the repo: `git clone https://github.com/navikt/nav-ally.git` or download a copy from https://github.com/navikt/nav-ally
+
+2. Run the following command to run the validator with a given definition file:
+
+    `$ node ./bin/validator -f wcag.yml`
 
 ## <a id="configuration"> Global configuration
 You can configure the tool with the following global variables. The variables can be exported or configured from the commandline or through the system environment.
 
 |Name|Type|Default Value|Required|Description|
 |----|----|-------------|--------|-----------|
-|CHROME_BINARY|`string`||Only on Linux|Chrome browser binary file path. Only needed on Linux/Unix systems|
-|FIREFOX_BINARY|`string`||Only on Linux|Firefox browser binary file path. Only needed on Linux/Unix systems|
+|CHROME_BIN|`string`||Only on Linux|Chrome browser binary file path. Only needed on Linux/Unix systems|
+|FIREFOX_BIN|`string`||Only on Linux|Firefox browser binary file path. Only needed on Linux/Unix systems|
 |BROWSER|`string`|chrome|No|Default browser to test when it's not defined in the definition file. Can be overridden pr link.|
 |HEADLESS|`boolean`|true|No|If set to `true` the browser runs in headless mode.|
 
 ### <a id="validation_rules"> Validation rules
 |Name|Type|Default Value|Required|Description|
 |----|----|-------------|--------|-----------|
-|DEFINITION_FILE|`string`||Yes|File path to a Yaml or Javascript definition file.|
+|DEFINITION_FILE|`string`||Yes|File path to a Yaml or Javascript definition file. NAV-Ally will try to load a definition file from this property if it cannot find a input file given with the `-f` flag. This can useful if NAV-Ally is run standalone in a build server.|
 |TAGS|`string`|**See below|No|Which rules and/or categories should the validator apply as default. Can be overridden on a link in the definition file.|
 
 #### <a id="axe_tags">**All the accessibility rule groups / categories available in Axe:
