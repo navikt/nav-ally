@@ -1,6 +1,10 @@
-# 1.2.3 / 2019-05-31
+# 1.3.1 / 2019-05-31
 
 ## :tada: Enhancements
+
+- Added support for specifying maximum number of errors. You can now add -M \<x\> flag to accept up to x errors.
+
+## :nut_and_bolt: Other
 
 - Upgraded deps
 - Refactored the validator code
