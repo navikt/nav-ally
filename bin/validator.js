@@ -41,6 +41,7 @@ program
     /^(yes|no|true|false)$/i,
     'no'
   )
+  .option('-mx, --max-errors <value>', 'accept up "mx" number of errors')
   .parse(process.argv);
 
 if (program.definitionFile) {
@@ -118,7 +119,12 @@ async function run() {
   const MochaRunner = require('../src/main/runners/mocha/MochaRunner');
   const runner = new MochaRunner();
   const results = await runner.run();
-  new ProcessHandler().assert(results.fails, results.passes);
+
+  if (program.maxErrors) {
+    new ProcessHandler().mxFails(program.maxErrors).assert(results.fails, results.passes);
+  } else {
+    new ProcessHandler().assert(results.fails, results.passes);
+  }
 }
 
 run();
