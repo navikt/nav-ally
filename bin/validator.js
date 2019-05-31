@@ -41,7 +41,7 @@ program
     /^(yes|no|true|false)$/i,
     'no'
   )
-  .option('-mx, --max-errors <value>', 'accept up "mx" number of errors')
+  .option('-M, --max-errors <value>', 'accept up "M" number of errors')
   .parse(process.argv);
 
 if (program.definitionFile) {
