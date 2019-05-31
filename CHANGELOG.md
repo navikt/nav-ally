@@ -1,3 +1,10 @@
+# 1.2.3 / 2019-05-31
+
+## :tada: Enhancements
+
+- Upgraded deps
+- Refactored the validator code
+
 # 1.2.0 / 2019-01-21
 
 ## :tada: Enhancements
