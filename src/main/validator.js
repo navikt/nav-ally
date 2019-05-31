@@ -1,3 +1,16 @@
+const {
+  TypeAndPressHandler,
+  SelectOptionHandler,
+  TypeHandler,
+  FindHandler,
+  ClickOnHandler,
+  WaitForHandler,
+  SwitchFrameHandler,
+  KeyboardHandler,
+  KeyTypeHandler,
+  KeyComboHandler
+} = require("./handlers/handlers");
+
 const SeleniumWebDriver = require('selenium-webdriver');
 
 const Chrome = require('selenium-webdriver/chrome');
@@ -5,8 +18,6 @@ const Chrome = require('selenium-webdriver/chrome');
 const Firefox = require('selenium-webdriver/firefox');
 
 const AxeBuilder = require('axe-webdriverjs');
-
-const Until = SeleniumWebDriver.until;
 
 const By = SeleniumWebDriver.By;
 const {log, error} = require('./log/log');
@@ -507,6 +518,7 @@ Validator.prototype.__commandChaining = function(
  * @returns {Promise}
  */
 Validator.prototype.__commandSelector = function(browser, chainElement) {
+
   if (chainElement.hasOwnProperty('waitFor')) {
     if (typeof chainElement['waitFor'] === 'object') {
       return this.__waitFor(
@@ -642,41 +654,11 @@ Validator.prototype.__selectOption = function(
   cssDropDown,
   cssOptionText
 ) {
-  const self = this;
-  return browser
-    .findElement(By.css(cssDropDown))
-    .then(function(element) {
-      return element.sendKeys(cssOptionText);
-    })
-    .catch(function(err) {
-      self.__exit(1, {
-        msg:
-          'An error occurred while selecting option [' +
-          cssOptionText +
-          '] from element [' +
-          cssDropDown +
-          ']. Make sure the element exist.',
-        err
-      });
-    });
+  return SelectOptionHandler(this).handle(browser, cssDropDown, cssOptionText);
 };
 
 Validator.prototype.__type = function(browser, cssTypeInto, textToType) {
-  const self = this;
-  return browser
-    .findElement(By.css(cssTypeInto))
-    .then(function(element) {
-      return element.sendKeys(textToType);
-    })
-    .catch(function(err) {
-      self.__exit(1, {
-        msg:
-          'An error occurred while sending text into element [' +
-          cssTypeInto +
-          ']. Make sure the element exist.',
-        err
-      });
-    });
+  return TypeHandler(this).handle(browser, cssTypeInto, textToType);
 };
 
 Validator.prototype.__typeAndPress = function(
@@ -685,22 +667,7 @@ Validator.prototype.__typeAndPress = function(
   textToType,
   key
 ) {
-  const self = this;
-  return this.__type(browser, cssTypeInto, textToType)
-    .then(function() {
-      return self.__keyboard(browser, key, [], cssTypeInto);
-    })
-    .catch(function(err) {
-      self.__exit(1, {
-        msg:
-          'An error occurred while sending text into element [' +
-          cssTypeInto +
-          '] and pressing key [' +
-          key +
-          ']. Make sure the element exist.',
-        err
-      });
-    });
+  return TypeAndPressHandler(this).handle(browser, cssTypeInto, textToType, key);
 };
 
 /**
@@ -713,73 +680,19 @@ Validator.prototype.__typeAndPress = function(
  * @private
  */
 Validator.prototype.__find = function(browser, type, selector) {
-  const self = this;
-  let locator = {};
-
-  if (type.toLowerCase() === 'xpath') locator = By.xpath(selector);
-  else if (type.toLowerCase() === 'linktext') locator = By.linkText(selector);
-  else if (type.toLowerCase() === 'name') locator = By.name(selector);
-  else if (type.toLowerCase() === 'classname') locator = By.className(selector);
-  else if (type.toLowerCase() === 'id') locator = By.id(selector);
-  else locator = By.css(selector);
-
-  return browser
-    .findElement(locator)
-    .then(element => {
-      return element.isDisplayed();
-    })
-    .catch(function(err) {
-      self.__exit(1, {
-        msg:
-          'An error occurred when trying to find element [' + selector + '].',
-        err
-      });
-    });
+  return FindHandler(this).handle(browser, type, selector);
 };
 
 Validator.prototype.__waitFor = function(browser, cssString, timeout) {
-  const self = this;
-  return browser
-    .wait(Until.elementsLocated(By.css(cssString)), timeout)
-    .catch(function(err) {
-      self.__exit(1, {
-        msg:
-          'An error occurred while waiting for css element [' +
-          cssString +
-          ']. Make sure the element exist.',
-        err
-      });
-    });
+  return WaitForHandler(this).handle(browser, cssString, timeout);
 };
 
 Validator.prototype.__clickOn = function(browser, cssString) {
-  const self = this;
-  return browser
-    .findElement(By.css(cssString))
-    .then(function(element) {
-      return element.click();
-    })
-    .catch(function(err) {
-      self.__exit(1, {
-        msg: 'An error occurred when trying to click on [' + cssString + '].',
-        err
-      });
-    });
+  return ClickOnHandler(this).handle(browser, cssString);
 };
 
 Validator.prototype.__switchFrame = function(browser, frame) {
-  const self = this;
-  if (frame === 'default') return browser.switchTo().defaultContent();
-  return browser
-    .switchTo()
-    .frame(frame)
-    .catch(function(err) {
-      self.__exit(1, {
-        msg:
-          "An error occurred when trying to switch to frame '" + frame + "'.",
-        err
-      });
-    });
+  return SwitchFrameHandler(this).handle(browser, frame);
 };
 
 Validator.prototype.__pause = function(browser, time) {
@@ -798,52 +711,15 @@ Validator.prototype.__keyboard = function(
   keyCombo = [],
   elementCss = 'body'
 ) {
-  const self = this;
-  return browser
-    .findElement(By.css(elementCss))
-    .then(function(element) {
-      const keyTypeId = self.__keytype(keyType, keyCombo);
-      return element.sendKeys(keyTypeId);
-    })
-    .catch(function(err) {
-      this.__exit(1, {
-        msg:
-          'An error occurred. Could not press key [' +
-          keyType +
-          '] Should be one of tab/enter/esc/backspace/delete/alt/shift/ctrl|command.',
-        err
-      });
-    });
+  return KeyboardHandler(this).handle(browser, keyType, keyCombo, elementCss);
 };
 
 Validator.prototype.__keytype = function(key, keyCombo) {
-  // key combination with stateful and stateless keys
-  if (key.toLowerCase() === 'combo' && keyCombo && keyCombo.length > 0)
-    return this.__keyCombo(keyCombo);
-  // stateless keys
-  else if (key.toLowerCase() === 'tab') return SeleniumWebDriver.Key.TAB;
-  else if (key.toLowerCase() === 'enter') return SeleniumWebDriver.Key.ENTER;
-  else if (key.toLowerCase() === 'esc') return SeleniumWebDriver.Key.ESCAPE;
-  else if (key.toLowerCase() === 'delete') return SeleniumWebDriver.Key.DELETE;
-  else if (key.toLowerCase() === 'backspace')
-    return SeleniumWebDriver.Key.BACK_SPACE;
-  // stateful keys that require Key.NULL at the end
-  else if (key.toLowerCase() === 'ctrl') return SeleniumWebDriver.Key.COMMAND;
-  else if (key.toLowerCase() === 'alt') return SeleniumWebDriver.Key.ALT;
-  else if (key.toLowerCase() === 'shift') return SeleniumWebDriver.Key.SHIFT;
-  else if (key.toLowerCase() === 'command')
-    return SeleniumWebDriver.Key.COMMAND;
-  else if (key.toLowerCase() === 'null') return SeleniumWebDriver.Key.NULL;
-  // other keys on the keyboard are just returned as is (letters/numbers)
-  else return key;
+  return KeyTypeHandler(this).handle(key, keyCombo);
 };
 
 Validator.prototype.__keyCombo = function(keyCombo) {
-  const self = this;
-  let chord = [];
-  const keyArr = keyCombo.split(',');
-  keyArr.forEach(key => chord.push(self.__keytype(key, undefined)));
-  return SeleniumWebDriver.Key.chord(keyCombo);
+  return KeyComboHandler(this).handle(keyCombo);
 };
 
 Validator.prototype.__browserLogs = async function(browser) {
