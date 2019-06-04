@@ -11,15 +11,12 @@ const {
   KeyComboHandler
 } = require("./handlers/handlers");
 
+const BrowserBuilder = require("./browsers/BrowserBuilder");
+
 const SeleniumWebDriver = require('selenium-webdriver');
-
-const Chrome = require('selenium-webdriver/chrome');
-
-const Firefox = require('selenium-webdriver/firefox');
 
 const AxeBuilder = require('axe-webdriverjs');
 
-const By = SeleniumWebDriver.By;
 const {log, error} = require('./log/log');
 const Report = require('./reports/report');
 const path = require('path');
@@ -110,11 +107,11 @@ Validator.prototype.run = function(printToConsole = true) {
     self.__validate(self.inputFile.links, () => resolve());
   })
     .then(() => {
-      return this.closeAllBrowsers();
+      return self.closeAllBrowsers();
     })
     .then(() => {
       if (printToConsole) {
-        self.printReportToConsole(self.config.detailedReport);
+        self.printReportToConsole();
         console.timeEnd('validation execution time');
         log('\n');
       }
@@ -196,12 +193,12 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
     options && options.ignoreRules ? options.ignoreRules.split(',') : [];
   // disabledRules.push("css-orientation-is-not-locked"); // consider disabling this rule
 
-  const vtags = options && options.tags ? options.tags.split(',') : tags;
-  log('Running UU validation with tags: ' + vtags); // + ", without rules: " + disabledRules);
+  const withTags = options && options.tags ? options.tags.split(',') : tags;
+  log('Running UU validation with tags: ' + withTags); // + ", without rules: " + disabledRules);
 
   try {
     new AxeBuilder(testBrowser)
-      .withTags(vtags)
+      .withTags(withTags)
       .disableRules(disabledRules)
       .analyze()
       .then(pageResults => {
@@ -270,24 +267,7 @@ Validator.prototype.__addBrowser = function(browser, browserName) {
  * @returns {!ThenableWebDriver}
  */
 Validator.prototype.createChrome = function(headless) {
-  let builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
-  const options = new Chrome.Options();
-  if (headless) {
-    if (CHROME_BIN && CHROME_BIN !== undefined) {
-      options.setChromeBinaryPath(CHROME_BIN);
-      log('Chrome running with binary: ' + CHROME_BIN);
-    }
-    options.headless();
-  }
-  options.addArguments([
-    'no-sandbox',
-    'allow-running-insecure-content',
-    'disable-dev-shm-usage',
-    'disable-software-rasterizer'
-  ]);
-  options.setAcceptInsecureCerts(true);
-  builder.withCapabilities(options);
-  return builder.build();
+  return BrowserBuilder().buildChrome(headless, CHROME_BIN);
 };
 
 /**
@@ -300,18 +280,7 @@ Validator.prototype.createChrome = function(headless) {
  * @returns {!ThenableWebDriver}
  */
 Validator.prototype.createFirefox = function(headless) {
-  let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
-  const options = new Firefox.Options();
-  if (headless) {
-    if (FIREFOX_BIN && FIREFOX_BIN !== undefined) {
-      options.setBinary(FIREFOX_BIN);
-      log('Firefox running with binary: ' + FIREFOX_BIN);
-    }
-    options.headless();
-  }
-  options.setAcceptInsecureCerts(true);
-  builder.setFirefoxOptions(options);
-  return builder.build();
+  return BrowserBuilder().buildFirefox(headless, FIREFOX_BIN);
 };
 
 /**
@@ -346,8 +315,9 @@ Validator.prototype.closeAllBrowsers = function() {
     quits.push(cachedBrowser.binary.quit());
   });
 
+  const self = this;
   return Promise.all(quits).catch(err =>
-    this.__exit(1, {msg: 'Error occurred while trying to close browsers.', err})
+      self.__exit(1, {msg: 'Error occurred while trying to close browsers.', err})
   );
 };
 
@@ -403,10 +373,8 @@ Validator.prototype.getWarningsOnPage = function(page) {
 
 /**
  * Will print out a report about the last executed validation.
- *
- * @param detailedReport Set to true to print out a detailed report about the errors.
  */
-Validator.prototype.printReportToConsole = function(detailedReport) {
+Validator.prototype.printReportToConsole = function() {
   this.results.forEach(function(page) {
     log('\n\n');
     log('Page: ' + (page.desc || page.link));
@@ -416,7 +384,7 @@ Validator.prototype.printReportToConsole = function(detailedReport) {
     ) {
       log('\n');
       log('Report: ');
-      Report.printReport(page.result, page.desc, detailedReport);
+      Report.printReport(page.result, page.desc, this.config.detailedReport);
       log('\n\n');
     } else {
       log('No errors.');

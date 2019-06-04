@@ -79,7 +79,7 @@ const TAGS =
  * @type {string}
  * @constant
  */
-const CHROME_BIN = process.env.CHROME_BIN;
+const CHROME_BIN = process.env.CHROME_BIN || undefined;
 
 /**
  * Indicates the path to the binary executable for Firefox.
@@ -87,7 +87,7 @@ const CHROME_BIN = process.env.CHROME_BIN;
  * @type {string}
  * @constant
  */
-const FIREFOX_BIN = process.env.FIREFOX_BIN;
+const FIREFOX_BIN = process.env.FIREFOX_BIN || undefined;
 
 module.exports = {
   DEBUG,
