@@ -11,11 +11,19 @@
 > An automation tool for testing frontend applications against a set of web accessibility guidelines (WCAG 2 (A, AA, AAA), Section 508 etc).
 
 The tool can be a part of a build pipeline, but can also be used standalone to test any frontend application. You create a list of links in a *definition file* that can
- be either a plain Yaml-configuration or a Javascript based configuration. The tool supports preprocessing of the web sites before validation with an DSL built on top of Selenium Webdriver (ie.
+ be either a plain Yaml configuration or a Javascript based configuration. The tool supports preprocessing of the web sites before validation with an DSL built on top of Selenium Webdriver (ie.
  clicking a button to load additional data). It uses Axe under the hood to preform the actual web accessibility validation.
 <br />
 
 ## <a id="quick_start"> Quick start
+
+You must have ChromeDriver installed and set in the path, before starting. On MacOS/Linux, you can do that easily with Brew:
+
+0. `$ brew cask install chromedriver`
+
+    If you are planning to integrate with Jenkins, read about the [Docker-setup here](docker/README.md).
+    
+    If you need to install ChromeDriver manually on Linux, see this [Docker file](docker/Dockerfile).
 
 1. Add the module to your project
 

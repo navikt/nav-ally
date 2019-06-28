@@ -22,19 +22,6 @@ Then the following command run the validation from the `myApp` folder:
 $ docker run -v "$(pwd)"/src/test:/nav-ally/uu navikt/nav-ally -f ./nav-ally/uu/wcagtest.yml
 ```
 
-## Build a new Docker image
-
-Run the following command (remember to set correct execution rights on `build.sh`):
-```
-$ sh build.sh navikt/nav-ally
-```
-
-If you want to run a test with the new image, then just add the filename also:
-
-```
-$ sh build.sh navikt/nav-ally wcagtest.yml
-```
-
 ## Integration with Jenkins
 
 Using a Jenkinsfile Docker-plugin:
@@ -68,4 +55,17 @@ stage("WCAG-test") {
   }
 }
 
+```
+
+## Build a new Docker image
+
+Run the following command (remember to set correct execution rights on `build.sh`):
+```
+$ sh build.sh navikt/nav-ally
+```
+
+If you want to run a test with the new image, then just add the filename also:
+
+```
+$ sh build.sh navikt/nav-ally wcagtest.yml
 ```

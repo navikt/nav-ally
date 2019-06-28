@@ -18,28 +18,20 @@ program
   .usage('[options]')
   .option('-f, --definition-file <path>', 'set definition file')
   .option(
-    '-h, --headless <value>',
-    'run in headless mode',
-    /^(yes|no|true|false)$/i,
-    'yes'
+    '-h, --headless',
+    'run in headless mode'
   )
   .option(
-    '-r, --detailed-report <value>',
-    'print a detailed report',
-    /^(yes|no|true|false)$/i,
-    'no'
+    '-r, --detailed-report',
+    'print a detailed report'
   )
   .option(
-    '-d, --debug-info <value>',
-    'print out debug info to console',
-    /^(yes|no|true|false)$/i,
-    'no'
+    '-d, --debug-info',
+    'prints out debug info to console if set'
   )
   .option(
-    '-w, --warnings <value>',
-    'if warnings should fail the validation',
-    /^(yes|no|true|false)$/i,
-    'no'
+    '-w, --warnings',
+    'validation fails on warnings too if set'
   )
   .option('-M, --max-errors <value>', 'accept up "M" number of errors')
   .parse(process.argv);
@@ -68,50 +60,38 @@ if (program.definitionFile) {
   process.exit(1);
 }
 
-yesOrNo(
+flagExists(
   program.headless,
   '> Running headless',
   '> Running browser.',
-  '> Invalid value given to flag -h / --headless.',
   'HEADLESS'
 );
-yesOrNo(
+flagExists(
   program.detailedReport,
   '> Running with detailed report turned on.',
   '> Running with detailed report turned off.',
-  '> Invalid value given to flag -r / --detailed-report.',
   'DETAILED_REPORT'
 );
-yesOrNo(
+flagExists(
   program.debugInfo,
   '> Running with debug info turned on.',
   '> Running with debug info turned off.',
-  '> Invalid value given to flag -d / --debug-info.',
   'DEBUG'
 );
-yesOrNo(
+flagExists(
   program.warnings,
   '> Running with warnings turned on.',
   '> Running with warnings turned off.',
-  '> Invalid value given to flag -d / --warnings.',
   'ASSERT_WARNINGS'
 );
 
-function yesOrNo(flag, msg, altMsg, errorMsg, envParam) {
+function flagExists(flag, msg, altMsg, envParam) {
   if (!flag) {
     console.log(altMsg);
     process.env[envParam] = false;
   } else {
-    if (flag === 'yes' || flag === 'true' || flag === true) {
-      console.log(msg);
-      process.env[envParam] = true;
-    } else if (flag === 'no' || flag === 'false' || flag === false) {
-      console.log(altMsg);
-      process.env[envParam] = false;
-    } else {
-      console.error(errorMsg + ' - Must be one of yes/no/true/false');
-      process.exit(1);
-    }
+    console.log(msg);
+    process.env[envParam] = true;
   }
 }
 

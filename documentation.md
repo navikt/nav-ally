@@ -1,5 +1,8 @@
 ## Documentation
 - [Using NAV-Ally in your project](#using_in_project)
+    - [Web Driver and Docker setup](#webdriversetup)
+    - [As a module in your existing project](#existingproject)
+    - [Running NAV-Ally standalone](#standalone)
 - [Global configuration](#configuration)
     - [Validation rules](#validation_rules)
     - [Test execution and assertation](#test_execution_and_assertation)
@@ -16,7 +19,17 @@
 
 ## <a id="using_in_project"> Using NAV-Ally in your project
 
-### As a module in your existing project:
+### <a id="webdriversetup"> Web Driver and Docker setup
+
+You must have a web driver installed and set in the path, before starting. On MacOS/Linux, you can do that easily with Brew:
+
+`$ brew cask install chromedriver`
+
+If you are planning to integrate with Jenkins, read about the [Docker-setup here](docker/README.md).  
+
+If you need to install ChromeDriver manually on Linux, see this [Docker file](docker/Dockerfile).
+
+### <a id="existingproject"> As a module in your existing project:
 
 1. Add the module to your project
 
@@ -31,21 +44,27 @@
      - "http://google.com"
     ```
 
-3. Create a run script in your package.json (assuming the exists in the root folder):
+3. Create a run script in your package.json:
 
     "wcag-test":"nav-ally -f wcag.yml"
+    
+    This will tell NAV-Ally to use the file called "wcag.yml". Validation will fail on any violation. If you want to allow _up to x errors_ , add the -M flag (not recommended):
+    
+    "wcag-test":"nav-ally -M 3 -f wcag.yml"
 
 4. You can now run the validator:
 
     `$ npm run wcag-test`
 
-### Running NAV-Ally standalone
+### <a id="standalone"> Running NAV-Ally standalone
 
-1. Clone the repo: `git clone https://github.com/navikt/nav-ally.git` or download a copy from https://github.com/navikt/nav-ally
+1. Install NAV-Ally globally from  NPM:
+
+`$ npm install -g nav-ally`
 
 2. Run the following command to run the validator with a given definition file:
 
-    `$ node ./bin/validator -f wcag.yml`
+    `$ nav-ally -f wcag.yml`
 
 ## <a id="configuration"> Global configuration
 You can configure the tool with the following global variables. The variables can be exported or configured from the commandline or through the system environment.
