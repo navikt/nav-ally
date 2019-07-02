@@ -9,9 +9,9 @@ const {
   KeyboardHandler,
   KeyTypeHandler,
   KeyComboHandler
-} = require("./handlers/handlers");
+} = require('./handlers/handlers');
 
-const BrowserBuilder = require("./browsers/BrowserBuilder");
+const BrowserBuilder = require('./browsers/BrowserBuilder');
 
 const SeleniumWebDriver = require('selenium-webdriver');
 
@@ -190,7 +190,9 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   }
 
   const disabledRules =
-    options && options.ignoreRules ? options.ignoreRules.split(',') : ['hidden-content'];
+    options && options.ignoreRules
+      ? options.ignoreRules.split(',')
+      : ['hidden-content'];
 
   const withTags = options && options.tags ? options.tags.split(',') : tags;
   log('Running UU validation with tags: ' + withTags); // + ", without rules: " + disabledRules);
@@ -316,7 +318,7 @@ Validator.prototype.closeAllBrowsers = function() {
 
   const self = this;
   return Promise.all(quits).catch(err =>
-      self.__exit(1, {msg: 'Error occurred while trying to close browsers.', err})
+    self.__exit(1, {msg: 'Error occurred while trying to close browsers.', err})
   );
 };
 
@@ -485,7 +487,6 @@ Validator.prototype.__commandChaining = function(
  * @returns {Promise}
  */
 Validator.prototype.__commandSelector = function(browser, chainElement) {
-
   if (chainElement.hasOwnProperty('waitFor')) {
     if (typeof chainElement['waitFor'] === 'object') {
       return this.__waitFor(
@@ -634,7 +635,12 @@ Validator.prototype.__typeAndPress = function(
   textToType,
   key
 ) {
-  return TypeAndPressHandler(this).handle(browser, cssTypeInto, textToType, key);
+  return TypeAndPressHandler(this).handle(
+    browser,
+    cssTypeInto,
+    textToType,
+    key
+  );
 };
 
 /**

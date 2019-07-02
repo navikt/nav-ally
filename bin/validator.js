@@ -23,18 +23,9 @@ program
     /^(yes|no|true|false)$/i,
     'yes'
   )
-  .option(
-    '-r, --detailed-report',
-    'print a detailed report'
-  )
-  .option(
-    '-d, --debug-info',
-    'prints out debug info to console if set'
-  )
-  .option(
-    '-w, --warnings',
-    'validation fails on warnings too if set'
-  )
+  .option('-r, --detailed-report', 'print a detailed report')
+  .option('-d, --debug-info', 'prints out debug info to console if set')
+  .option('-w, --warnings', 'validation fails on warnings too if set')
   .option('-M, --max-errors <value>', 'accept up "M" number of errors')
   .parse(process.argv);
 
@@ -63,11 +54,11 @@ if (program.definitionFile) {
 }
 
 yesOrNo(
-    program.headless,
-    '> Running headless',
-    '> Running browser.',
-    '> Invalid value given to flag -h / --headless.',
-    'HEADLESS'
+  program.headless,
+  '> Running headless',
+  '> Running browser.',
+  '> Invalid value given to flag -h / --headless.',
+  'HEADLESS'
 );
 
 flagExists(
@@ -123,7 +114,9 @@ async function run() {
   const results = await runner.run();
 
   if (program.maxErrors) {
-    new ProcessHandler().mxFails(program.maxErrors).assert(results.fails, results.passes);
+    new ProcessHandler()
+      .mxFails(program.maxErrors)
+      .assert(results.fails, results.passes);
   } else {
     new ProcessHandler().assert(results.fails, results.passes);
   }
