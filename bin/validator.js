@@ -18,8 +18,10 @@ program
   .usage('[options]')
   .option('-f, --definition-file <path>', 'set definition file')
   .option(
-    '-h, --headless',
-    'run in headless mode'
+    '-h, --headless <value>',
+    'run in headless mode',
+    /^(yes|no|true|false)$/i,
+    'yes'
   )
   .option(
     '-r, --detailed-report',
@@ -60,12 +62,14 @@ if (program.definitionFile) {
   process.exit(1);
 }
 
-flagExists(
-  program.headless,
-  '> Running headless',
-  '> Running browser.',
-  'HEADLESS'
+yesOrNo(
+    program.headless,
+    '> Running headless',
+    '> Running browser.',
+    '> Invalid value given to flag -h / --headless.',
+    'HEADLESS'
 );
+
 flagExists(
   program.detailedReport,
   '> Running with detailed report turned on.',
@@ -92,6 +96,24 @@ function flagExists(flag, msg, altMsg, envParam) {
   } else {
     console.log(msg);
     process.env[envParam] = true;
+  }
+}
+
+function yesOrNo(flag, msg, altMsg, errorMsg, envParam) {
+  if (!flag) {
+    console.log(altMsg);
+    process.env[envParam] = false;
+  } else {
+    if (flag === 'yes' || flag === 'true' || flag === true) {
+      console.log(msg);
+      process.env[envParam] = true;
+    } else if (flag === 'no' || flag === 'false' || flag === false) {
+      console.log(altMsg);
+      process.env[envParam] = false;
+    } else {
+      console.error(errorMsg + ' - Must be one of yes/no/true/false');
+      process.exit(1);
+    }
   }
 }
 
