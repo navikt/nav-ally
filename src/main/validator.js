@@ -190,8 +190,7 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
   }
 
   const disabledRules =
-    options && options.ignoreRules ? options.ignoreRules.split(',') : [];
-  // disabledRules.push("css-orientation-is-not-locked"); // consider disabling this rule
+    options && options.ignoreRules ? options.ignoreRules.split(',') : ['hidden-content'];
 
   const withTags = options && options.tags ? options.tags.split(',') : tags;
   log('Running UU validation with tags: ' + withTags); // + ", without rules: " + disabledRules);
