@@ -3,6 +3,7 @@
     - [Web Driver and Docker setup](#webdriversetup)
     - [As a module in your existing project](#existingproject)
     - [Running NAV-Ally standalone](#standalone)
+    - [Command line arguments](#cli)
 - [Global configuration](#configuration)
     - [Validation rules](#validation_rules)
     - [Test execution and assertation](#test_execution_and_assertation)
@@ -55,6 +56,23 @@ If you need to install ChromeDriver manually on Linux, see this [Docker file](do
 4. You can now run the validator:
 
     `$ npm run wcag-test`
+
+### <a id="cli"> Command line arguments
+
+|Argument|Description| 
+|--------|-----------|
+|  -V, --version|                 output the version number  |
+|  -f, --definition-file <path>|  set definition file  |
+|  --headless <value>|            run in headless mode (default: "yes") | 
+|  -r, --detailed-report |        print a detailed report  |
+|  -d, --debug-info   |           prints out debug info to console if set | 
+|  -w, --warnings       |         validation fails on warnings too if set | 
+|  -M, --max-errors <value> |     accept up "M" number of errors  |
+|  -h, --help |                   output usage information  |
+
+You can specify single letter args (those without values) together. For example to enable detailed report, debug info and fail on warnings:
+
+    "wcag-test":"nav-ally -drw -f wcag.yml"
 
 ### <a id="standalone"> Running NAV-Ally standalone
 

@@ -18,7 +18,7 @@ program
   .usage('[options]')
   .option('-f, --definition-file <path>', 'set definition file')
   .option(
-    '-h, --headless <value>',
+    '--headless <value>',
     'run in headless mode',
     /^(yes|no|true|false)$/i,
     'yes'

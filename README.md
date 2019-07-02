@@ -47,6 +47,8 @@ You must have ChromeDriver installed and set in the path, before starting. On Ma
 
     "wcag-test":"nav-ally -f wcag.yml"
 
+    See more command line arguments [in the documentation](documentation.md#cli)  
+
 4. You can now run the validator:
 
     `$ npm run wcag-test`
