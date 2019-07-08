@@ -12,7 +12,13 @@ logo: /resources/nav-logo.jpg
 permalink: pretty
 
 collections:
-  - pages:
-      label: pages
-      output: true
-      permalink: /:collection/:name
+  pages:
+    label: pages
+    output: true
+    permalink: /:collection/:name
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
+  - jekyll-feed
