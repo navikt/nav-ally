@@ -16,9 +16,3 @@ collections:
       label: pages
       output: true
       permalink: /:collection/:name
-
-plugins:
-  - jekyll-sitemap
-  - jekyll-seo-tag
-  - jekyll-redirect-from
-  - jekyll-feed
