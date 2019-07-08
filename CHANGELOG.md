@@ -1,3 +1,13 @@
+# 1.4.0 / 2019-07-08
+
+## :nut_and_bolt: Other
+
+- Upgraded and reduced deps
+- Fixed security issues
+- Updated documentation
+- Fixed cli flags: r, d and w doesn't require a value anymore. If one they are on the command line, they will be actived.
+- The "hidden-content" rule is now disabled by default. Add an empty _ignoreRules_ option to your definition file to activate it.
+
 # 1.3.1 / 2019-05-31
 
 ## :tada: Enhancements
