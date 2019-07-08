@@ -10,10 +10,10 @@
     "start-http": "serve -l 7777 src/test/validation",
     "start-validationtest": "node src/test/validation/validation-test.js",
     "serve-doc": "bundle exec jekyll serve --source ./docs --destination ./docs/_site --config ./docs/_config.yml",
-    "lint": "nps lint",
-    "lintfix": "nps lint.codefix",
-    "reformat": "nps reformat",
-    "docs": "nps docs"
+    "lint": "eslint './src/**/*.js' 'bin/*.js'",
+    "lintfix": "eslint './src/**/*.js' 'bin/*.js' --fix",
+    "reformat": "prettier-eslint --write '*.js' 'src/**/*.js' 'bin/*.js'",
+    "docs": "rimraf docs/_site docs/api && mkdirp docs/api && jsdoc -c jsdoc.conf.json && cp LICENSE docs/api"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,6 @@
     "axe-webdriverjs": "2.2.0",
     "commander": "2.20.0",
     "js-yaml": "^3.13.1",
-    "lodash": "4.17.11",
     "mocha": "6.1.4",
     "node-fetch": "2.6.0",
     "selenium-webdriver": "4.0.0-alpha.4",
@@ -69,7 +68,6 @@
     "eslint-plugin-standard": "4.0.0",
     "jsdoc": "^3.6.2",
     "mkdirp": "0.5.1",
-    "nps": "5.9.5",
     "prettier-eslint-cli": "5.0.0",
     "rimraf": "2.6.3",
     "serve": "^11.0.2"

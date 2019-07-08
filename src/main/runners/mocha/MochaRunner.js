@@ -2,7 +2,6 @@ const Mocha = require('mocha');
 const Test = Mocha.Test;
 const Suite = Mocha.Suite;
 
-const _ = require('lodash');
 const assert = require('assert');
 const Validator = require('../../validator');
 const {NAME, TIMEOUT, ASSERT_WARNINGS} = require('../../globals');
@@ -120,10 +119,10 @@ MochaRunner.prototype.__runValidator = async function(
     const suite = Suite.create(parentSuite, page.desc || page.link);
     suite.timeout(timeout);
 
-    if (!this.__hasOption(page, 'options.test')) {
+    if (!(page.options && page.options.test)) {
       this.__generateTests(suite, validator, page, assertWarnings);
     } else {
-      if (!this.__hasOption(page, 'options.test.expect')) {
+      if (!(page.options && page.options.test && page.options.test.expect)) {
         const msg =
           'Test option does not have an expectation for link ' +
           (page.desc || page.link);
@@ -278,10 +277,6 @@ MochaRunner.prototype.__generateInvertedTests = function(
     error(msg);
     throw new Error(msg);
   }
-};
-
-MochaRunner.prototype.__hasOption = function(option, optionPath) {
-  return _.has(option, optionPath);
 };
 
 MochaRunner.prototype.__assertTestOptions = function(expect, option) {
