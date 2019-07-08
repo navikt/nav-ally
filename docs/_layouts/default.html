@@ -24,7 +24,7 @@
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
         {% for page in site.pages %}
-        <p class="view"><a href="{{ page.url }}">{{page.name}}</a></p>
+        <p class="view"><a href="{{ page.url | relative_url }}">{{page.name}}</a></p>
         {% endfor %}
 
         {% if site.github.is_user_page %}
