@@ -19,17 +19,17 @@ The tool can be a part of a build pipeline, but can also be used standalone to t
 
 You must have ChromeDriver installed and set in the path, before starting. On MacOS/Linux, you can do that easily with Brew:
 
-0. `$ brew cask install chromedriver`
+1. `$ brew cask install chromedriver`
 
     If you are planning to integrate with Jenkins, read about the [Docker-setup here](docker/README.md).
     
     If you need to install ChromeDriver manually on Linux, see this [Docker file](docker/Dockerfile).
 
-1. Add the module to your project
+2. Add the module to your project
 
     `npm install --save-dev nav-ally`
 
-2. Create a Yaml-based definition file and add it anywhere in your project:
+3. Create a Yaml-based definition file and add it anywhere in your project:
 
     ```
     $ touch wcag.yml
@@ -43,13 +43,13 @@ You must have ChromeDriver installed and set in the path, before starting. On Ma
      - "http://google.com"
     ```
 
-3. Create a run script in your package.json:
+4. Create a run script in your package.json:
 
     "wcag-test":"nav-ally -f wcag.yml"
 
     See more command line arguments [in the documentation](documentation.md#cli)  
 
-4. You can now run the validator:
+5. You can now run the validator:
 
     `$ npm run wcag-test`
 
