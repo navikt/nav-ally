@@ -11,7 +11,6 @@ logo: /resources/nav-logo.jpg
 
 permalink: pretty
 timezone: Europa/Oslo
-url: https://navikt.github.io/nav-ally/
 
 collections:
   pages:
