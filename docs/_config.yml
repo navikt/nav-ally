@@ -1,3 +1,6 @@
+# Theme doc:
+# https://github.com/pages-themes/minimal
+
 theme: jekyll-theme-minimal
 name: NAV-Ally
 
@@ -7,3 +10,14 @@ show_downloads: true
 logo: /resources/nav-logo.jpg
 
 permalink: pretty
+
+collections:
+  - pages:
+      label: pages
+      output: true
+      permalink: /:collection/:name
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jemoji
