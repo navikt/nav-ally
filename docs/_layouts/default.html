@@ -7,9 +7,9 @@
 
     {% seo %}
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon-16x16.png">
-    <link rel="shortcut icon" href="/resources/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{site.url | relative_url}}/resources/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{site.url | relative_url}}/resources/favicon-16x16.png">
+    <link rel="shortcut icon" href="{{site.url | relative_url}}/resources/favicon.ico">
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
