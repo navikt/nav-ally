@@ -10,12 +10,12 @@ show_downloads: true
 logo: /resources/nav-logo.jpg
 
 permalink: pretty
+timezone: Europa/Oslo
+url: https://navikt.github.io/nav-ally/
 
 collections:
   pages:
-    label: pages
     output: true
-    permalink: /:collection/:name
 
 plugins:
   - jekyll-sitemap
