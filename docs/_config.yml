@@ -1,2 +1,9 @@
 theme: jekyll-theme-minimal
 name: NAV-Ally
+
+title: NAV-Ally Website
+description: NAV-Ally Documentation
+show_downloads: true
+logo: /resources/nav-logo.jpg
+
+permalink: pretty
