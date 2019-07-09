@@ -4,14 +4,22 @@
 theme: jekyll-theme-minimal
 name: NAV-Ally
 
+## Options
+show_title: true
+show_downloads: false
+show_description: true
+
+## normal (860px), xl (1000px)
+site_width: xl
+
 title: nav-ally
 description:
-show_downloads: false
-logo: /resources/nav-logo.jpg
+logo: /assets/icons/nav-logo.jpg
 
 permalink: pretty
 timezone: Europa/Oslo
 url: https://navikt.github.io/nav-ally
+# google_analytics:
 
 collections:
   pages:

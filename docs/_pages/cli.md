@@ -1,8 +1,8 @@
 ---
-name: API
+name: CLI
 layout: page
-position: 8
+position: 2
 ---
-# API
+# Command Line Usage
 
 [API documentation]({{site.url}}/api)

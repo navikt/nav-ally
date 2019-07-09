@@ -1,5 +1,6 @@
 ---
 name: About
-layout: default
+layout: page
+position: 9
 ---
 # About
