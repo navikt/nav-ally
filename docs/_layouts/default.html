@@ -31,9 +31,9 @@
         <p>{{ site.description | default: site.github.project_tagline }}</p>
         {% endif %}
 
-        {% assign pages = site.pages | sort: 'position', 'first' %}
-        {% for page in pages %}
-        <p class="view"><a href="{{ page.url | relative_url }}">{{page.name}}</a></p>
+        {% assign subpages = site.subpages | sort: 'position', 'first' %}
+        {% for subpage in subpages %}
+        <p class="view"><a href="{{ subpage.url | relative_url }}">{{subpage.title}}</a></p>
         {% endfor %}
 
         {% if site.github.is_user_page %}

@@ -1,5 +1,5 @@
 ---
-name: API
+title: API
 layout: page
 position: 8
 ---

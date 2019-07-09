@@ -2,7 +2,6 @@
 ## https://github.com/pages-themes/minimal
 
 theme: jekyll-theme-minimal
-name: NAV-Ally
 
 ## Options
 show_title: true
@@ -12,8 +11,9 @@ show_description: true
 ## normal (860px), xl (1000px)
 site_width: xl
 
+## Values used in the front page
 title: nav-ally
-description:
+description: An automation tool for testing frontend applications against a set of web accessibility guidelines.
 logo: /assets/icons/nav-logo.jpg
 
 permalink: pretty
@@ -21,12 +21,31 @@ timezone: Europa/Oslo
 url: https://navikt.github.io/nav-ally
 # google_analytics:
 
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/icons/nav-logo.jpg
+
+## SEO optimization of social links
+social:
+  name: NAV IT
+  links:
+    - https://github.com/navikt
+
+## SEO optimization of twitter cards
+twitter:
+  username: navnorge
+  card: summary
+
 collections:
-  pages:
+  subpages:
     output: true
+    permalink: /pages/:name
 
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-redirect-from
   - jekyll-feed
+  - jemoji

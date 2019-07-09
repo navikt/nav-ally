@@ -1,5 +1,5 @@
 ---
-name: CLI
+title: CLI
 layout: page
 position: 2
 ---

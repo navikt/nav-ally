@@ -1,5 +1,5 @@
 ---
-name: Quickstart
+title: Quickstart
 layout: page
 position: 1
 ---
