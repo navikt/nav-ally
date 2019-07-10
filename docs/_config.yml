@@ -18,7 +18,8 @@ logo: /assets/icons/nav-logo.jpg
 
 permalink: pretty
 timezone: Europa/Oslo
-url: https://navikt.github.io/nav-ally
+url: https://navikt.github.io
+baseurl: /nav-ally
 # google_analytics:
 
 defaults:

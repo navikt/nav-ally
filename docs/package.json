@@ -1,0 +1,18 @@
+{
+  "name": "nav-ally-web",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npm run clean && bundle exec jekyll build",
+    "build-local": "npm run clean && bundle exec jekyll build --config _config.yml,_config.local.yml",
+    "serve": "bundle exec jekyll serve --baseurl ''",
+    "clean": "bundle exec jekyll clean",
+    "test": "npm run build-local && bundle exec htmlproofer ./_site --assume-extension --url-ignore '/tags/,/api/,/localhost/' --file-ignore /api/ --check-html --allow-hash-href --check-opengraph",
+    "validate-html": "ruby ./w3c"
+  },
+  "author": {
+    "name": "Dervis Mansuroglu",
+    "url": "https://github.com/dervism"
+  },
+  "license": "MIT"
+}

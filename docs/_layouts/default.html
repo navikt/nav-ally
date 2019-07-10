@@ -7,9 +7,9 @@
 
     {% seo %}
 
-    <link rel="icon" type="image/png" sizes="32x32" href="{{site.url | relative_url}}/assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{site.url | relative_url}}/assets/icons/favicon-16x16.png">
-    <link rel="shortcut icon" href="{{site.url | relative_url}}/assets/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{site.url}}{{site.baseurl}}/assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{site.url}}{{site.baseurl}}/assets/icons/favicon-16x16.png">
+    <link rel="shortcut icon" href="{{site.url}}{{site.baseurl}}/assets/icons/favicon.ico">
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -20,11 +20,11 @@
     <header>
 
         {% if site.logo %}
-        <a href="{{site.url}}"><img src="{{site.logo | relative_url}}" alt="Logo" /></a>
+        <a href="{{site.url}}{{site.baseurl}}"><img src="{{site.logo | relative_url}}" alt="Logo" /></a>
         {% endif %}
 
         {% if site.show_title %}
-        <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
+        <h1><a href="{{site.url}}{{site.baseurl}}">{{ site.title | default: site.github.repository_name }}</a></h1>
         {% endif %}
 
         {% if site.show_description %}
