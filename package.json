@@ -46,31 +46,31 @@
     "mocha"
   ],
   "dependencies": {
-    "axe-core": "3.2.2",
+    "axe-core": "3.3.0",
     "axe-webdriverjs": "2.2.0",
     "commander": "2.20.0",
     "js-yaml": "^3.13.1",
-    "mocha": "6.1.4",
+    "mocha": "6.2.0",
     "node-fetch": "2.6.0",
     "selenium-webdriver": "4.0.0-alpha.4",
     "start-server-and-test": "1.9.1"
   },
   "devDependencies": {
     "docdash": "1.1.1",
-    "eslint": "6.0.1",
+    "eslint": "6.1.0",
     "eslint-config-prettier": "6.0.0",
-    "eslint-config-semistandard": "13.0.0",
-    "eslint-config-standard": "12.0.0",
-    "eslint-plugin-import": "2.18.0",
+    "eslint-config-semistandard": "14.0.0",
+    "eslint-config-standard": "13.0.1",
+    "eslint-plugin-import": "2.18.2",
     "eslint-plugin-node": "9.1.0",
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.0",
-    "jsdoc": "^3.6.2",
+    "jsdoc": "^3.6.3",
     "mkdirp": "0.5.1",
     "prettier-eslint-cli": "5.0.0",
     "rimraf": "2.6.3",
-    "serve": "^11.0.2"
+    "serve": "^11.1.0"
   },
   "prettier": {
     "singleQuote": true,
