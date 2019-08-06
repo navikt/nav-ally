@@ -22,7 +22,7 @@ You must have ChromeDriver installed and set in the path, before starting. On Ma
 1. `$ brew cask install chromedriver`
 
     If you are planning to integrate with Jenkins, read about the [Docker-setup here](docker/README.md).
-    
+
     If you need to install ChromeDriver manually on Linux, see this [Docker file](docker/Dockerfile).
 
 2. Add the module to your project
@@ -37,7 +37,7 @@ You must have ChromeDriver installed and set in the path, before starting. On Ma
     ```
 
     Paste in the following example content:
-    
+
     ```yaml
     links:
      - "http://google.com"
@@ -71,7 +71,7 @@ Questions about the code or the project:
 
 ## For NAV-employees
 
-If you are a NAV employee, you can also ask questions in the channel #fo on Slack.
+If you are a NAV employee, you can also ask questions in the channel #pto on Slack.
 
 ### The rest of the codebase (excluding 3rd party dependencies)
 Copyright (c) 2019 NAV
