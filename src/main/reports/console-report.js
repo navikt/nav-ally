@@ -1,25 +1,25 @@
 function printNodes(nodeCount, nodes) {
   for (let j = 0; j < nodeCount; j += 1) {
-    let node = nodes[j];
+    const node = nodes[j];
 
     if (typeof node !== 'undefined') {
       console.log('\tHTML Element: ' + node.html);
-      let anys = node.any;
-      let targets = node.target;
+      const anys = node.any;
+      const targets = node.target;
 
       if (typeof anys !== 'undefined') {
         for (let k = 0; k < anys.length; k += 1) {
-          let displayNumber = k + 1;
-          let any = anys[k];
+          const displayNumber = k + 1;
+          const any = anys[k];
           console.log('\tMessage ' + displayNumber + ': ' + any.message);
         }
       }
 
       if (typeof targets !== 'undefined') {
-        let targetCount = targets.length;
+        const targetCount = targets.length;
 
         for (let k = 0; k < targetCount; k += 1) {
-          let target = targets[k];
+          const target = targets[k];
           console.log('\tDOM Element: ' + target);
         }
       }
@@ -31,9 +31,9 @@ function printNodes(nodeCount, nodes) {
 function print(violations, url, type, detailedReport) {
   printLine();
 
-  let typeCaption = type ? 'violation' : 'warning';
-  let typeCaptions = type ? 'violations' : 'warnings';
-  let violationCount = violations.length;
+  const typeCaption = type ? 'violation' : 'warning';
+  const typeCaptions = type ? 'violations' : 'warnings';
+  const violationCount = violations.length;
   let statCount = 0;
 
   violations.forEach(violation => (statCount += violation.nodes.length));
@@ -47,11 +47,11 @@ function print(violations, url, type, detailedReport) {
     printEmptyLine();
 
     for (let i = 0; i < violationCount; i += 1) {
-      let violation = violations[i];
-      let nodes = violation.nodes;
+      const violation = violations[i];
+      const nodes = violation.nodes;
 
       if (typeof nodes !== 'undefined') {
-        let nodeCount = nodes.length;
+        const nodeCount = nodes.length;
 
         nodeCount > 1
           ? console.log(
@@ -96,16 +96,16 @@ function printEmptyLine() {
 }
 
 exports.printReport = function(results, desc, detailedReport) {
-  let url = desc || results.url;
+  const url = desc || results.url;
 
-  let violations = results.violations;
+  const violations = results.violations;
   if (typeof violations !== 'undefined') {
     print(violations, url, true, detailedReport);
   }
 
   console.log();
 
-  let incomplete = results.incomplete;
+  const incomplete = results.incomplete;
   if (typeof incomplete !== 'undefined') {
     print(incomplete, url, false, detailedReport);
   }

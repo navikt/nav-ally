@@ -30,7 +30,7 @@ program
   .parse(process.argv);
 
 if (program.definitionFile) {
-  let definitionFilePath = program.definitionFile;
+  const definitionFilePath = program.definitionFile;
   let folder = '';
 
   // absolute or relative path

@@ -44,7 +44,7 @@ function handleInputFromDefinitionFile(definitionFile) {
     process.exit(1);
   }
 
-  let validationFileExists = fs.existsSync(realPath);
+  const validationFileExists = fs.existsSync(realPath);
 
   if (validationFileExists) {
     return loadDefinitionFile(definitionFile, realPath);
@@ -57,7 +57,7 @@ function handleInputFromDefinitionFile(definitionFile) {
 function loadDefinitionFile(name, file) {
   if (file.endsWith('.js')) {
     console.log('Loading Javascript definition file: ' + name);
-    let jsObj = require(file);
+    const jsObj = require(file);
     validateInputObject(jsObj);
     return jsObj;
   } else if (file.endsWith('.yml') || file.endsWith('.yaml')) {

@@ -8,7 +8,7 @@ const {log} = require('../log/log');
 
 function BrowserBuilder() {
   function buildChrome(headless, binaryPath) {
-    let builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
+    const builder = new SeleniumWebDriver.Builder().forBrowser('chrome');
     const options = new Chrome.Options();
     if (headless) {
       if (binaryPath) {
@@ -29,7 +29,7 @@ function BrowserBuilder() {
   }
 
   function buildFirefox(headless, binaryPath) {
-    let builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
+    const builder = new SeleniumWebDriver.Builder().forBrowser('firefox');
     const options = new Firefox.Options();
     if (headless) {
       if (binaryPath) {

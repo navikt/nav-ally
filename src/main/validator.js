@@ -150,10 +150,10 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
 
   const results = this.results;
   const tags = this.tags;
-  let page = pages[index];
+  const page = pages[index];
   const options = page.options;
 
-  let testBrowser = this.startNewBrowser(options);
+  const testBrowser = this.startNewBrowser(options);
 
   log('Setting browser timeout (ms): ' + this.scriptTimeout);
   await this.setTimeout(testBrowser, this.scriptTimeout);
@@ -242,7 +242,7 @@ Validator.prototype.startNewBrowser = function(options) {
     this.__addBrowser(newBrowser, overriddenBrowser);
     return newBrowser;
   } else {
-    let newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
+    const newCachedBrowser = this.createDefaultBrowser(this.headlessBrowser);
     this.__addBrowser(newCachedBrowser, this.defaultBrowserName);
     return newCachedBrowser;
   }
@@ -486,69 +486,69 @@ Validator.prototype.__commandChaining = function(
  */
 Validator.prototype.__commandSelector = function(browser, chainElement) {
   if (chainElement.hasOwnProperty('waitFor')) {
-    if (typeof chainElement['waitFor'] === 'object') {
+    if (typeof chainElement.waitFor === 'object') {
       return this.__waitFor(
         browser,
-        chainElement['waitFor'].element,
-        chainElement['waitFor'].timeout || this.waitTimeout
+        chainElement.waitFor.element,
+        chainElement.waitFor.timeout || this.waitTimeout
       );
     } else {
-      return this.__waitFor(browser, chainElement['waitFor'], this.waitTimeout);
+      return this.__waitFor(browser, chainElement.waitFor, this.waitTimeout);
     }
   }
   if (chainElement.hasOwnProperty('clickOn')) {
-    return this.__clickOn(browser, chainElement['clickOn']);
+    return this.__clickOn(browser, chainElement.clickOn);
   }
   if (chainElement.hasOwnProperty('pause')) {
-    return this.__pause(browser, chainElement['pause']);
+    return this.__pause(browser, chainElement.pause);
   }
   if (chainElement.hasOwnProperty('sleep')) {
-    return this.__sleep(browser, chainElement['sleep']);
+    return this.__sleep(browser, chainElement.sleep);
   }
   if (chainElement.hasOwnProperty('find')) {
-    if (typeof chainElement['find'] === 'object') {
+    if (typeof chainElement.find === 'object') {
       return this.__find(
         browser,
-        chainElement['find'].type,
-        chainElement['find'].element
+        chainElement.find.type,
+        chainElement.find.element
       );
     } else {
-      return this.__find(browser, 'css', chainElement['find']);
+      return this.__find(browser, 'css', chainElement.find);
     }
   }
   if (chainElement.hasOwnProperty('selectOption')) {
     return this.__selectOption(
       browser,
-      chainElement['selectOption'].from,
-      chainElement['selectOption'].option
+      chainElement.selectOption.from,
+      chainElement.selectOption.option
     );
   }
   if (chainElement.hasOwnProperty('type')) {
-    if (chainElement['type'].key) {
+    if (chainElement.type.key) {
       return this.__typeAndPress(
         browser,
-        chainElement['type'].into,
-        chainElement['type'].text,
-        chainElement['type'].key
+        chainElement.type.into,
+        chainElement.type.text,
+        chainElement.type.key
       );
     } else {
       return this.__type(
         browser,
-        chainElement['type'].into,
-        chainElement['type'].text
+        chainElement.type.into,
+        chainElement.type.text
       );
     }
   }
   if (chainElement.hasOwnProperty('keyboard')) {
     return this.__keyboard(
       browser,
-      chainElement['keyboard'].keyType,
-      chainElement['keyboard'].keyCombo,
-      chainElement['keyboard'].element
+      chainElement.keyboard.keyType,
+      chainElement.keyboard.keyCombo,
+      chainElement.keyboard.element
     );
   }
   if (chainElement.hasOwnProperty('switchFrame')) {
-    return this.__switchFrame(browser, chainElement['switchFrame']);
+    return this.__switchFrame(browser, chainElement.switchFrame);
   }
 };
 
