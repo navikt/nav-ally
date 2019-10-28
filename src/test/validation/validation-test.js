@@ -4,6 +4,7 @@ const fs = require('fs');
 const MochaRunner = require('../../main/runners/mocha/MochaRunner');
 const runner = new MochaRunner();
 const ProcessHandler = require('../../main/processes/ProcessHandler');
+const htmlReport = require('../../main/reports/html-report');
 
 // set options
 let name = "UU Tests";
@@ -53,6 +54,8 @@ function runTestSuite(testSites) {
 async function runTests() {
     const fails = await runTestSuite(failingTestSuite);
     const oks = await runTestSuite(okTestSuite);
+
+    htmlReport.printReport(fails.results, "fails");
 
     new ProcessHandler().assert(fails.fails + oks.fails, fails.passes + oks.passes);
 }

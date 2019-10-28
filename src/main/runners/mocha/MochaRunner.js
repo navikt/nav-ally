@@ -159,7 +159,8 @@ MochaRunner.prototype.__runValidator = async function(
         fails,
         passes,
         testFails,
-        testPasses
+        testPasses,
+        results
       };
       if (resolve) resolve(resultset);
       if (callback) callback(resultset);

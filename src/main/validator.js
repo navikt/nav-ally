@@ -18,7 +18,7 @@ const SeleniumWebDriver = require('selenium-webdriver');
 const AxeBuilder = require('axe-webdriverjs');
 
 const {log, error} = require('./log/log');
-const Report = require('./reports/report');
+const Report = require('./reports/console-report');
 const path = require('path');
 const inputLoader = require('./inputs/InputLoader');
 
@@ -257,7 +257,7 @@ Validator.prototype.startNewBrowser = function(options) {
 Validator.prototype.__addBrowser = function(browser, browserName) {
   this.browsers.push({
     name: browserName,
-    binary: browser
+    webdriverInstance: browser
   });
 };
 
@@ -313,7 +313,7 @@ Validator.prototype.closeAllBrowsers = function() {
   log('Closing ' + this.browsers.length + ' browsers.');
 
   this.browsers.forEach(function(cachedBrowser) {
-    quits.push(cachedBrowser.binary.quit());
+    quits.push(cachedBrowser.webdriverInstance.quit());
   });
 
   const self = this;
@@ -449,9 +449,7 @@ Validator.prototype.__countAllInCompleteOccurrences = function(results) {
 Validator.prototype.__commands = function(browser, promises) {
   const self = this;
   return new Promise(function(resolve) {
-    self.__commandSelector(browser, promises[0]).then(function() {
-      self.__commandChaining(browser, promises, 1, resolve);
-    });
+    self.__commandChaining(browser, promises, 0, resolve);
   });
 };
 

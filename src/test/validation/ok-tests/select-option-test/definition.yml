@@ -6,6 +6,6 @@ links:
         - selectOption:
             from: '#typeSelect'
             option: 'c'
-        - clickOn: "#inputSection button"
+        - clickOn: "#inputSection > button"
         - pause: 5000
         - waitFor: '#hiddenSection'

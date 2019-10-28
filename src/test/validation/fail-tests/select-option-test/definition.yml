@@ -8,5 +8,5 @@ links:
         - selectOption:
             from: '#typeSelect'
             option: 'c'
-        - clickOn: "#inputSection button"
+        - clickOn: "#inputSection > button"
         - find: '#hiddenSection'

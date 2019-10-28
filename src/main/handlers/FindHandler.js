@@ -16,7 +16,7 @@ function FindHandler(validator) {
     return browser
       .findElement(locator)
       .then(element => {
-        return element.isDisplayed();
+        return element;
       })
       .catch(function(err) {
         validator.__exit(1, {

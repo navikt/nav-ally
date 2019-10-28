@@ -13,7 +13,7 @@ function BrowserBuilder() {
     if (headless) {
       if (binaryPath) {
         options.setChromeBinaryPath(binaryPath);
-        log('Chrome running with binary: ' + binaryPath);
+        log('Chrome running with webdriverInstance: ' + binaryPath);
       }
       options.headless();
     }
@@ -34,7 +34,7 @@ function BrowserBuilder() {
     if (headless) {
       if (binaryPath) {
         options.setBinary(binaryPath);
-        log('Firefox running with binary: ' + binaryPath);
+        log('Firefox running with webdriverInstance: ' + binaryPath);
       }
       options.headless();
     }

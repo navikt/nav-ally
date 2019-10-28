@@ -8,6 +8,13 @@ function SelectOptionHandler(validator) {
       .then(function(element) {
         return element.sendKeys(cssOptionText);
       })
+      .then(function() {
+        return browser.findElement(By.css(cssDropDown));
+      })
+      .then(function(element) {
+        return element.getAttribute('value');
+      })
+      .then(text => text)
       .catch(function(err) {
         validator.__exit(1, {
           msg:
