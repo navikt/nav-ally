@@ -195,7 +195,8 @@ Validator.prototype.__foreachAsync = async function(pages, index, resolve) {
       : ['hidden-content'];
 
   const withTags = options && options.tags ? options.tags.split(',') : tags;
-  log('Running UU validation with tags: ' + withTags); // + ", without rules: " + disabledRules);
+  log('Running UU validation with tags: ' + withTags);
+  log('Running UU validation without rules: ' + disabledRules);
 
   try {
     new AxeBuilder(testBrowser)
