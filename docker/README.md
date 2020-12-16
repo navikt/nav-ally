@@ -67,5 +67,5 @@ $ sh build.sh navikt/nav-ally
 If you want to run a test with the new image, then just add the filename also:
 
 ```
-$ sh build.sh navikt/nav-ally wcagtest.yml
+$ sh build.sh navikt/nav-ally test.yml
 ```
