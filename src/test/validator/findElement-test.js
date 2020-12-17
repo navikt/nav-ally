@@ -1,6 +1,7 @@
 const Validator = require('../../main/validator');
 
 const assert = require('chai').assert;
+const mochaHooks = require('../hooks');
 
 let validator = null;
 let browser = null;
@@ -40,13 +41,10 @@ describe('tests', function() {
         }
       ]);
       browser = validator.createChrome(true);
+      mochaHooks.addBrowser(browser);
       await browser.get("data:text/html;charset=utf-8," + createDom());
 
       this.timeout(20000);
-    });
-
-    after(async function() {
-      browser.quit();
     });
 
     it('should find two values', async function() {

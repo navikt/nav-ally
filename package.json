@@ -5,7 +5,7 @@
   "main": "bin/validator.js",
   "scripts": {
     "start": "node bin/validator.js",
-    "test": "mocha ./src/test/validator/**/*.js",
+    "test": "mocha --require ./src/test/hooks.js ./src/test/validator/**/*.js",
     "test-integration": "start-server-and-test start-http http://localhost:7777/ start-validationtest",
     "start-http": "serve -l 7777 src/test/validation",
     "start-validationtest": "node src/test/validation/validation-test.js",

@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const filePath = path.join(__dirname, '../validation/fail-tests/select-option-test/index.html');
 const source   = fs.readFileSync(filePath,'utf8').toString();
+const mochaHooks = require('../hooks');
 
 let validator = null;
 let browser = null;
@@ -24,13 +25,10 @@ describe('tests', function() {
     }
 
     before(async function() {
-      validator = new Validator({});
+      validator = new Validator([]);
       browser = validator.createChrome(true);
+      mochaHooks.addBrowser(browser);
       await browser.get("data:text/html;charset=utf-8," + createDom());
-    });
-
-    after(async function() {
-      browser.quit();
     });
 
     it('should select c', async function() {
