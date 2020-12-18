@@ -55,7 +55,7 @@ async function runTests() {
     const fails = await runTestSuite(failingTestSuite);
     const oks = await runTestSuite(okTestSuite);
 
-    htmlReport.printReport(fails.results, "fails");
+    //htmlReport.printReport(fails.results, "fails");
 
     new ProcessHandler().assert(fails.fails + oks.fails, fails.passes + oks.passes);
 }
