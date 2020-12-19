@@ -6,6 +6,9 @@ exports.addBrowser = function(browser) {
 }
 
 exports.mochaHooks = {
+  beforeAll(done) {
+    done();
+  },
   afterAll(done) {
     console.log("Quitting " + browsers.length + " browsers.");
     browsers.forEach((browser, i) => {
