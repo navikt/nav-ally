@@ -6,7 +6,7 @@ const mochaHooks = require('../hooks');
 let validator = null;
 let browser = null;
 
-describe('tests', function() {
+describe('Find element tests', function() {
   describe('find elements and check values', () => {
     function createDom() {
       return `

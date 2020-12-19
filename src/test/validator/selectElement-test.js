@@ -16,7 +16,7 @@ let timeout = 10000;
 
 const buttonSelector = "#inputSection > button";
 
-describe('tests', function() {
+describe('Select element tests', function() {
   this.timeout(timeout);
 
   describe('select an option', () => {
