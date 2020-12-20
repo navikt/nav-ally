@@ -7,6 +7,8 @@ let validator = null;
 let browser = null;
 
 describe('Find element tests', function() {
+  this.timeout(60000);
+
   describe('find elements and check values', () => {
     function createDom() {
       return `
@@ -43,8 +45,6 @@ describe('Find element tests', function() {
       browser = validator.createChrome(true);
       mochaHooks.addBrowser(browser);
       await browser.get("data:text/html;charset=utf-8," + createDom());
-
-      this.timeout(20000);
     });
 
     it('should find two values', async function() {

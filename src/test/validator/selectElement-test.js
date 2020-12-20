@@ -12,12 +12,11 @@ const mochaHooks = require('../hooks');
 
 let validator = null;
 let browser = null;
-let timeout = 10000;
 
 const buttonSelector = "#inputSection > button";
 
 describe('Select element tests', function() {
-  this.timeout(timeout);
+  this.timeout(60000);
 
   describe('select an option', () => {
     function createDom() {
