@@ -37,7 +37,7 @@ function runTestSuite(testSites) {
     console.log('Loading test ' + testSite);
 
     // safely read in the test case yaml config
-    const yamlObj = yaml.safeLoad(
+    const yamlObj = yaml.load(
       fs.readFileSync(`./src/test/validation/${testSite}/definition.yml`)
     );
     console.log('YAML object loaded:', yamlObj.links);

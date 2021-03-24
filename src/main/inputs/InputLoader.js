@@ -29,7 +29,7 @@ function loadInputFromEnvironment(definitionFile) {
 
 function handleInputFromYaml(yamlFile) {
   log('Loading yaml definition:');
-  const yamlObj = preProcessYaml(yaml.safeLoad(yamlFile));
+  const yamlObj = preProcessYaml(yaml.load(yamlFile));
   log('YAML object loaded:', yamlObj);
   return yamlObj;
 }
